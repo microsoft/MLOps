@@ -6,6 +6,12 @@ Azure ML contains a number of asset management and orchestration services to hel
 
 With Azure ML + Azure DevOps you can effectively and cohesively manage your datasets, experiments, models, and ML-infused applications.
 
+# MLOps Examples
+
+- https://github.com/Microsoft/MLOpsSamples
+- https://github.com/Microsoft/MLOps_VideoAnomalyDetection
+- https://github.com/Microsoft/MLOps_HappyPath
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
