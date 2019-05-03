@@ -1,3 +1,10 @@
+# MLOps with Azure ML
+
+MLOps empowers data scientists and app developers to help bring ML models to production. 
+
+Azure ML contains a number of asset management and orchestration services to help you manage the lifecycle of your model training & deployment workflows.
+
+With Azure ML + Azure DevOps you can effectively and cohesively manage your datasets, experiments, models, and ML-infused applications.
 
 # Contributing
 
