@@ -1,0 +1,15 @@
+name: project_environment
+dependencies:
+- python=3.6.2
+
+- pip:
+  - --index-url https://azuremlsdktestpypi.azureedge.net/AzureML-Contrib-Explain-Model-Gated/3010237
+  - --extra-index-url https://pypi.python.org/simple
+  - sklearn-pandas
+  - azureml-defaults<0.1.50
+  - azureml-contrib-explain-model<0.1.50
+  - azureml-core<0.1.50
+  - azureml-telemetry<0.1.50
+  - azureml-explain-model<0.1.50
+- scikit-learn
+- pandas
