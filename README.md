@@ -44,6 +44,7 @@ All of our examples will be built in the open and we welcome contributions from 
 - https://github.com/Microsoft/MLOps_VideoAnomalyDetection
 - https://github.com/Microsoft/MLOps_HappyPath
 - https://github.com/Microsoft/Recommenders
+- https://github.com/MicrosoftDocs/pipelines-azureml
 
 # Contributing
 
