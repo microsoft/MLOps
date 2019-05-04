@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+- task: UsePythonVersion@0
+  displayName: 'Use Python 3.6'
+  inputs:
+    versionSpec: 3.6
+    
+- script: |
+   pip install flake8
+   pip install flake8_formatter_junit_xml
+   flake8 --format junit-xml --output-file $(Build.BinariesDirectory)/flake8_report.xml --exit-zero
+  displayName: 'Check code quality'
+  
+- script: create-computes.sh
+  displayName: 'Update compute configuration'
+
+- script: python mlpipeline.py
+  displayName: 'Create or update training pipeline'

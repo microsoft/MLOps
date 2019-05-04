@@ -1,0 +1,9 @@
+name: inference_environment
+dependencies:
+- python=3.6.2
+
+- pip:
+  - azureml-sdk
+  - tensorflow==1.12.0
+  - numpy==1.16.1
+  - azureml-contrib-services==1.0.10
