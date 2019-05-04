@@ -1,0 +1,10 @@
+{
+   "entryScript": "score.py",
+   "runtime": "python",
+   "condaFile": "infenv.yml",
+   "extraDockerfileSteps": null,
+   "sourceDirectory": null,
+   "enableGpu": false,
+   "baseImage": null,
+   "baseImageRegistry": null
+}
