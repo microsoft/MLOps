@@ -1,0 +1,44 @@
+script: train.py
+arguments: []
+target: cpu
+framework: Python
+communicator: None
+autoPrepareEnvironment: true
+maxRunDurationSeconds:
+nodeCount: 1
+environment:
+  name:
+  version:
+  environmentVariables:
+    EXAMPLE_ENV_VAR: EXAMPLE_VALUE
+  python:
+    userManagedDependencies: false
+    interpreterPath: python
+    condaDependenciesFile: .azureml/conda_dependencies.yml
+    baseCondaEnvironment:
+  docker:
+    enabled: true
+    baseImage: mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04
+    sharedVolumes: true
+    gpuSupport: false
+    shmSize: 1g
+    arguments: []
+    baseImageRegistry:
+      address:
+      username:
+      password:
+history:
+  outputCollection: true
+  snapshotProject: true
+  directoriesToWatch:
+  - logs
+mpi:
+  processCountPerNode: 1
+dataReferences: {}
+sourceDirectoryDataStore:
+amlcompute:
+  vmSize: STANDARD_D2_V2
+  vmPriority:
+  retainCluster: false
+  name:
+  clusterMaxNodeCount: 1
