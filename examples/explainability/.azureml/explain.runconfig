@@ -1,44 +1,60 @@
-script: train.py
-arguments: []
-target: cpu
-framework: Python
-communicator: None
-autoPrepareEnvironment: true
-maxRunDurationSeconds:
-nodeCount: 1
-environment:
-  name:
-  version:
-  environmentVariables:
-    EXAMPLE_ENV_VAR: EXAMPLE_VALUE
-  python:
-    userManagedDependencies: false
-    interpreterPath: python
-    condaDependenciesFile: .azureml/conda_dependencies.yml
-    baseCondaEnvironment:
-  docker:
-    enabled: true
-    baseImage: mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04
-    sharedVolumes: true
-    gpuSupport: false
-    shmSize: 1g
-    arguments: []
-    baseImageRegistry:
-      address:
-      username:
-      password:
-history:
-  outputCollection: true
-  snapshotProject: true
-  directoriesToWatch:
-  - logs
-mpi:
-  processCountPerNode: 1
-dataReferences: {}
-sourceDirectoryDataStore:
-amlcompute:
-  vmSize: STANDARD_D2_V2
-  vmPriority:
-  retainCluster: false
-  name:
-  clusterMaxNodeCount: 1
+{
+  "script": "train.py",
+  "arguments": [
+
+  ],
+  "target": "cpu",
+  "framework": "Python",
+  "communicator": "None",
+  "autoPrepareEnvironment": true,
+  "maxRunDurationSeconds": null,
+  "nodeCount": 1,
+  "environment": {
+    "name": null,
+    "version": null,
+    "environmentVariables": {
+      "EXAMPLE_ENV_VAR": "EXAMPLE_VALUE"
+    },
+    "python": {
+      "userManagedDependencies": false,
+      "interpreterPath": "python",
+      "condaDependenciesFile": ".azureml/conda_dependencies.yml",
+      "baseCondaEnvironment": null
+    },
+    "docker": {
+      "enabled": true,
+      "baseImage": "mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04",
+      "sharedVolumes": true,
+      "gpuSupport": false,
+      "shmSize": "1g",
+      "arguments": [
+
+      ],
+      "baseImageRegistry": {
+        "address": null,
+        "username": null,
+        "password": null
+      }
+    }
+  },
+  "history": {
+    "outputCollection": true,
+    "snapshotProject": true,
+    "directoriesToWatch": [
+      "logs"
+    ]
+  },
+  "mpi": {
+    "processCountPerNode": 1
+  },
+  "dataReferences": {
+  },
+  "sourceDirectoryDataStore": null,
+  "amlcompute": {
+    "vmSize": "STANDARD_D2_V2",
+    "vmPriority": null,
+    "retainCluster": false,
+    "name": null,
+    "clusterMaxNodeCount": 1
+  }
+}
