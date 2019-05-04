@@ -18,11 +18,11 @@ steps:
 - script: |
    pip install flake8
    pip install flake8_formatter_junit_xml
-   flake8 --format junit-xml --output-file $(Build.BinariesDirectory)/test_flake8_report.xml --exit-zero
+   flake8 --format junit-xml --output-file $(Build.BinariesDirectory)/flake8_report.xml --exit-zero
   displayName: 'Check code quality'
   
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testResultsFiles: '**/test-*.xml'
+    testResultsFiles: '$(Build.BinariesDirectory)/*_report.xml'
     testRunTitle: 'Publish test results'
