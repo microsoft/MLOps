@@ -20,9 +20,3 @@ steps:
    pip install flake8_formatter_junit_xml
    flake8 --format junit-xml --output-file $(Build.BinariesDirectory)/flake8_report.xml --exit-zero
   displayName: 'Check code quality'
-  
-- script: create-computes.sh
-  displayName: 'Update compute configuration'
-
-- script: python mlpipeline.py
-  displayName: 'Create or update training pipeline'
