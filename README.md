@@ -1,4 +1,4 @@
-# MLOps
+# MLOps on Azure
 
 ## What is MLOps?
 MLOps empowers data scientists and app developers to help bring ML models to production. 
