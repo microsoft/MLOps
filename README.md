@@ -1,4 +1,4 @@
-# MLOps with Azure ML
+# MLOps
 
 ## What is MLOps?
 MLOps empowers data scientists and app developers to help bring ML models to production. 
@@ -28,18 +28,21 @@ With Azure ML + Azure DevOps you can effectively and cohesively manage your data
 - Certify model behavior meets regulatory & adversarial standards
 
 **Model packaging & validation**
-Support model portability across a variety of platforms
-Certify model performance meets functional and latency requirements
+- Support model portability across a variety of platforms
+- Certify model performance meets functional and latency requirements
 
 **Model deployment & monitoring**
-Release models with confidence
-Monitor & know when to retrain
+- Release models with confidence
+- Monitor & know when to retrain
 
 # MLOps Solutions
+We are committed to providing a collection of best-in-class solutions for MLOps, both in terms of well documented & fully managed cloud solutions, as well as reusable recipes which can help your organization to bootstrap its MLOps muscle.
 
+All of our examples will be built in the open and we welcome contributions from the community!
 - https://github.com/Microsoft/MLOpsSamples
 - https://github.com/Microsoft/MLOps_VideoAnomalyDetection
 - https://github.com/Microsoft/MLOps_HappyPath
+- https://github.com/Microsoft/Recommenders
 
 # Contributing
 
