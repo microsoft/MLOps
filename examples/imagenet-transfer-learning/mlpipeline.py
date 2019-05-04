@@ -19,7 +19,7 @@ project_folder = "."
 
 ws = Workspace.from_config()
 ds = ws.get_default_datastore()
-source_ds = Datastore.get(ws, 'amlvdaik14969151586')
+source_ds = Datastore.get(ws, 'samplemobilenetimages')
 
 # Declare packages dependencies required in the pipeline (these can also be expressed as a YML file)
 cd = CondaDependencies.create(pip_packages=["azureml-defaults", 'tensorflow==1.8.0'])
