@@ -40,9 +40,6 @@ With Azure ML + Azure DevOps you can effectively and cohesively manage your data
 We are committed to providing a collection of best-in-class solutions for MLOps, both in terms of well documented & fully managed cloud solutions, as well as reusable recipes which can help your organization to bootstrap its MLOps muscle.
 
 All of our examples will be built in the open and we welcome contributions from the community!
-- https://github.com/Microsoft/MLOpsSamples
-- https://github.com/Microsoft/MLOps_VideoAnomalyDetection
-- https://github.com/Microsoft/MLOps_HappyPath
 - https://github.com/Microsoft/Recommenders
 - https://github.com/MicrosoftDocs/pipelines-azureml
 
