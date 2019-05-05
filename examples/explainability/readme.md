@@ -25,3 +25,21 @@ result = json.loads(resp.text)
 
 This will return you a JSON file which contains the prediction (attrition / no attrition) and the weighted feature importance score.
 ![./media/prediction-features.png](./media/prediction-features.png)
+
+If you want to reproduce this chart yourself, you can use this convenient script:
+```
+result = json.loads(resp.text)
+labels = x_test[:1].columns.to_list()
+objects = labels
+y_pos = np.arange(len(objects))
+performance = result["local_importance_values"][0][0]
+
+plt.bar(y_pos, performance, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+locs, labels = plt.xticks()
+plt.setp(labels, rotation=90)
+plt.ylabel('Feature impact - leaving vs not leaving')
+plt.title('Local feature importance for prediction')
+
+plt.show()
+```
