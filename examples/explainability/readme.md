@@ -23,3 +23,4 @@ result = json.loads(resp.text)
 ```
 
 This will return you a JSON file which contains the prediction (attrition / no attrition) and the weighted feature importance score.
+![./media/prediction-features.png](./media/prediction-features.png)
