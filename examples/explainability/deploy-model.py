@@ -1,6 +1,8 @@
 from azureml.core.model import Workspace, InferenceConfig, Model
 from azureml.core.webservice import AciWebservice
 
+ws = Workspace.from_config()
+
 scoring_explainer_model = Model(ws, 'IBM_attrition_explainer')
 attrition_model = Model(ws, 'attrition_model')
 
