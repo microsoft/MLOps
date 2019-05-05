@@ -42,6 +42,7 @@ We are committed to providing a collection of best-in-class solutions for MLOps,
 All of our examples will be built in the open and we welcome contributions from the community!
 - https://github.com/Microsoft/Recommenders
 - https://github.com/MicrosoftDocs/pipelines-azureml
+- https://github.com/Microsoft/MLOps_VideoAnomalyDetection
 
 # Contributing
 
