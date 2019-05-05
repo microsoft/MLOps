@@ -1,29 +1,18 @@
 # Copyright (c) Microsoft. All rights reserved.
 # Licensed under the MIT license.
 
-from sklearn import datasets
-from sklearn.linear_model import Ridge
+from sklearn.externals import joblib
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler,OneHotEncoder
+from sklearn_pandas import DataFrameMapper
+import os
+import pandas as pd
+
+from azureml.core import Run
 from azureml.explain.model.tabular_explainer import TabularExplainer
 from azureml.contrib.explain.model.explanation.explanation_client import ExplanationClient
-from sklearn.model_selection import train_test_split
-from azureml.core.run import Run
-from sklearn.externals import joblib
-import os
-import numpy as np
-import pandas as pd
-
-from sklearn import svm
-from sklearn.preprocessing import LabelEncoder,StandardScaler
-import azureml.core
-
-from sklearn.pipeline import Pipeline
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.linear_model import LogisticRegression
-from azureml.contrib.explain.model.tabular_explainer import TabularExplainer
-import pandas as pd
-import numpy as np
-from sklearn_pandas import DataFrameMapper
 
 os.makedirs('./outputs', exist_ok=True)
 
@@ -67,10 +56,6 @@ transformations = numeric_transformations + categorical_transformations
 clf = Pipeline(steps=[('preprocessor', DataFrameMapper(transformations)),
                       ('classifier', LogisticRegression(solver='lbfgs'))])
 
-# get the run this was submitted from
-run = Run.get_context()
-client = ExplanationClient.from_run(run)
-
 # Split data into train and test
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(attritionXData, 
@@ -107,19 +92,21 @@ global_explanation = tabular_explainer.explain_global(x_test)
 # Uploading model explanation data for storage or visualization in webUX
 # The explanation can then be downloaded on any compute
 comment = 'Global explanation on classification model trained on IBM employee attrition dataset'
-client.upload_model_explanation(global_explanation, comment=comment)
-
-# upload x_test, pickled above
-run.upload_file('x_test_ibm.pkl', os.path.join('./outputs/', x_test_pkl))
 
 # ScoringExplainer
 scoring_explainer = tabular_explainer.create_scoring_explainer(x_test)
 # Pickle scoring explainer locally
 scoring_explainer_path = scoring_explainer.save('scoring_explainer_deploy')
 
+run = Run.get_context()
+client = ExplanationClient.from_run(run)
+client.upload_model_explanation(global_explanation, comment=comment)
+# upload x_test, pickled above
+run.upload_file('x_test_ibm.pkl', os.path.join('./outputs/', x_test_pkl))
+
 # Register original model
 run.upload_file('original_model.pkl', os.path.join('./outputs/', model_file_name))
-original_model = run.register_model(model_name='original_model', model_path='original_model.pkl')
+original_model = run.register_model(model_name='IBM_attrition_model', model_path='original_model.pkl')
 
 # Register scoring explainer
 run.upload_file('IBM_attrition_explainer.pkl', scoring_explainer_path)
