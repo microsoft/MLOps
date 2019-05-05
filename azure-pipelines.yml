@@ -18,7 +18,7 @@ steps:
 - script: |
    pip install flake8
    pip install flake8_formatter_junit_xml
-   flake8 --format junit-xml --output-file $(Build.BinariesDirectory)/flake8_report.xml --exit-zero
+   flake8 --format junit-xml --output-file $(Build.BinariesDirectory)/flake8_report.xml --exit-zero --ignore E111
   displayName: 'Check code quality'
   
 - task: PublishTestResults@2
