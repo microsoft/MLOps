@@ -6,6 +6,7 @@ We're training a sklearn regression model here.
 
 ## Create explainer from trained model
 The explainer is created in the script.
+![./media/explain-dashboard.png](./media/explain-dashboard.png)
 
 ## Deploy model and explainer together
 You can deploy the model and explainer from the CLI or the SDK. There are examples for both in this folder.
