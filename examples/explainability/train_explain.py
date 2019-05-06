@@ -11,7 +11,7 @@ import os
 import pandas as pd
 
 from azureml.core import Run
-from azureml.explain.model.tabular_explainer import TabularExplainer
+from azureml.contrib.explain.model.tabular_explainer import TabularExplainer
 from azureml.contrib.explain.model.explanation.explanation_client import ExplanationClient
 
 os.makedirs('./outputs', exist_ok=True)
