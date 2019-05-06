@@ -11,6 +11,10 @@ Azure ML contains a number of asset management and orchestration services to hel
 With Azure ML + Azure DevOps you can effectively and cohesively manage your datasets, experiments, models, and ML-infused applications.
 ![ML lifecycle](./media/ml-lifecycle.png)
 
+## New MLOps features
+- [Azure DevOps Machine Learning extension](https://marketplace.visualstudio.com/items?itemName=ms-air-aiagility.vss-services-azureml) 
+- [Azure ML CLI](https://aka.ms/azmlcli)
+
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
 - Digital audit trail requirements change when dealing with code + (potentially customer) data
