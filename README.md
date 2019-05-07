@@ -16,12 +16,15 @@ With Azure ML + Azure DevOps you can effectively and cohesively manage your data
 - [Azure ML CLI](https://aka.ms/azmlcli)
 
 ## Architecture Flow for MLOps
+An example repo which exercises this flow can be found [here](https://github.com/Microsoft/MLOpsPython)
 
 ### Train Model
 1. Data Scientist writes/updates the code and push it to git repo. This triggers an Azure DevOps build.
 2. Once the Azure DevOps build pipeline is triggered, it runs following types of tasks:
     - Run for new code: Every time new code is committed to the repo, the build pipeline performs data sanity tests and unit tests on the new code.
-    - One-time run: These tasks runs only for the first time the build pipeline runs. It will programatically create an [Azure ML Service Workspace](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#workspace), provision [Azure ML Compute](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-set-up-training-targets#amlcompute) (used for model training compute), and publish an [Azure ML Pipeline](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-ml-pipelines). This published Azure ML pipeline is the model training/retraining pipeline.
+    - One-time run: These tasks runs only for the first time the build pipeline runs. It will programatically create an [Azure ML Service Workspace](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#workspace), provision [Azure ML Compute](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-set-up-training-targets#amlcompute) (used for model training compute), and publish an [Azure ML Pipeline](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-ml-pipelines). 
+    
+**This published Azure ML pipeline is the model training/retraining pipeline.**
     
     > Note: The Publish Azure ML pipeline task currently runs for every code change
 
