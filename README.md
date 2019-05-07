@@ -15,41 +15,45 @@ With Azure ML + Azure DevOps you can effectively and cohesively manage your data
 - [Azure DevOps Machine Learning extension](https://marketplace.visualstudio.com/items?itemName=ms-air-aiagility.vss-services-azureml) 
 - [Azure ML CLI](https://aka.ms/azmlcli)
 
-## Architecture Flow for MLOps
-An example repo which exercises this flow can be found [here](https://github.com/Microsoft/MLOpsPython)
+## Getting Started / MLOps Workflow
+An example repo which exercises our recommended flow can be found [here](https://github.com/Microsoft/MLOpsPython)
 
 ### Train Model
-Data Scientist writes/updates the code and push it to git repo. This triggers an Azure DevOps build.
+Data scientists work in topic branches off of master.
+When code is pushed to the Git repo, trigger a CI (continuous integration) pipeline.
 
-Once the Azure DevOps build pipeline is triggered, it runs following types of tasks:
+First run: Provision infra-as-code (ML workspace, compute targets, datastores).
 
-Run for new code: Every time new code is committed to the repo, the build pipeline performs data sanity tests and unit tests on the new code.
+For new code: Every time new code is committed to the repo, run unit tests, data quality checks, train model.
 
-One-time run: These tasks runs only for the first time the build pipeline runs. It will programatically create an [Azure ML Service Workspace](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#workspace), provision [Azure ML Compute](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-set-up-training-targets#amlcompute) (used for model training compute), and publish an [Azure ML Pipeline](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-ml-pipelines). 
-    
-**This published Azure ML pipeline is the model training/retraining pipeline.**
-    
-    > Note: The Publish Azure ML pipeline task currently runs for every code change
+We recommend 3 steps in your CI process:
 
-The Azure ML Training pipeline is triggered once the Azure DevOps build pipeline completes. All the tasks in this pipeline runs on Azure ML Compute created earlier. Following are the tasks in this pipeline:
+- **Train Model** - run training code / algo & output a [model](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model) file which is stored in the [run history](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#run).
 
-**Train Model** task executes model training script on Azure ML Compute. It outputs a [model](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model) file which is stored in the [run history](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#run).
+- **Evaluate Model** - compare the performance of newly trained model with the model in production. If the new model performs better than the production model, the following steps are executed. If not, they will be skipped.
 
-**Evaluate Model** task evaluates the performance of newly trained model with the model in production. If the new model performs better than the production model, the following steps are executed. If not, they will be skipped.
-
-**Register Model** task takes the improved model and registers it with the [Azure ML Model registry](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model-registry). This allows us to version control it.
+- **Register Model** - take the best model and register it with the [Azure ML Model registry](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model-registry). This allows us to version control it.
 
 ### Package, Validate, Deploy Model
 
-You can package and validate your ML model using the **Azure ML CLI**.
+- You can package and validate your ML model using the **Azure ML CLI**.
 
-Once you have registered your ML model, you can use Azure ML + Azure DevOps to deploy it.
+- Once you have registered your ML model, you can use Azure ML + Azure DevOps to deploy it.
 
-You can define a **release definition** in Azure Pipelines to help coordinate a release. Using the DevOps extension for Machine Learning, you can include artifacts from Azure ML, Azure Repos, and GitHub as part of your Release Pipeline.
+- You can define a **release definition** in Azure Pipelines to help coordinate a release. Using the DevOps extension for Machine Learning, you can include artifacts from Azure ML, Azure Repos, and GitHub as part of your Release Pipeline.
 
-In your release definition, you can leverage the Azure ML CLI's **model deploy** command to deploy your Azure ML model to the cloud (ACI or AKS).
+- In your release definition, you can leverage the Azure ML CLI's **model deploy** command to deploy your Azure ML model to the cloud (ACI or AKS).
 
-The deployment in production is a [gated release](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/approvals/gates?view=azure-devops). This means that once the model web service deployment in the Staging/QA environment is successful, a notification is sent to approvers to manually review and approve the release. Once the release is approved, the model scoring web service is deployed to [Azure Kubernetes Service(AKS)](https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes) and the deployment is tested.
+- Define your deployment as a [gated release](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/approvals/gates?view=azure-devops). This means that once the model web service deployment in the Staging/QA environment is successful, a notification is sent to approvers to manually review and approve the release. Once the release is approved, the model scoring web service is deployed to [Azure Kubernetes Service(AKS)](https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes) and the deployment is tested.
+
+# MLOps Solutions
+We are committed to providing a collection of best-in-class solutions for MLOps, both in terms of well documented & fully managed cloud solutions, as well as reusable recipes which can help your organization to bootstrap its MLOps muscle.
+
+All of our examples will be built in the open and we welcome contributions from the community!
+- https://github.com/Microsoft/MLOpsPython
+- https://github.com/Microsoft/Recommenders
+- https://github.com/MicrosoftDocs/pipelines-azureml
+- https://github.com/Microsoft/MLOps_VideoAnomalyDetection
 
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
@@ -75,15 +79,6 @@ The deployment in production is a [gated release](https://docs.microsoft.com/en-
 **Model deployment & monitoring**
 - Release models with confidence
 - Monitor & know when to retrain
-
-# MLOps Solutions
-We are committed to providing a collection of best-in-class solutions for MLOps, both in terms of well documented & fully managed cloud solutions, as well as reusable recipes which can help your organization to bootstrap its MLOps muscle.
-
-All of our examples will be built in the open and we welcome contributions from the community!
-- https://github.com/Microsoft/MLOpsPython
-- https://github.com/Microsoft/Recommenders
-- https://github.com/MicrosoftDocs/pipelines-azureml
-- https://github.com/Microsoft/MLOps_VideoAnomalyDetection
 
 # Contributing
 
