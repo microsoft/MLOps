@@ -39,7 +39,7 @@ steps:
     azureSubscription: 'build-demo'
     scriptLocation: 'inlineScript'
     inlineScript: 'az ml folder attach -w build-2019-demo -g scottgu-all-hands'
-    workingDirectory: 'model-training'
+    workingDirectory: ''
 
 - task: AzureCLI@1
   inputs:
