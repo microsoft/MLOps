@@ -1,10 +1,5 @@
-import json
-import numpy as np
 import pandas as pd
-import os
-import pickle
 from sklearn.externals import joblib
-from sklearn.linear_model import LogisticRegression
 from azureml.core.model import Model
 
 def init():
