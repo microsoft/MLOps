@@ -47,3 +47,17 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: 'az ml run submit-script -c sklearn -e test -d training-env.yml train-sklearn.py'
     workingDirectory: 'model-training'
+
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 'build-demo'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az ml model register -n mymodel -p sklearn_regression_model.pkl -t model.json'
+    workingDirectory: 'model-deployment'
+    
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 'build-demo'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az ml model deploy -n acicicd -f model.json --ic inferenceConfig.yml --dc aciDeploymentConfig.yml --overwrite'
+    workingDirectory: 'model-deployment'
