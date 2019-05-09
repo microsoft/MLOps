@@ -1,0 +1,28 @@
+{
+    "script": "train-sklearn.py",
+    "framework": "Python",
+    "communicator": "None",
+    "target": "cpu",
+    "environment": {
+        "python": {
+            "interpreterPath": "python",
+            "userManagedDependencies": false,
+            "condaDependencies": {
+                "dependencies":[
+                    "python=3.6.2", 
+                    "scikit-learn",
+                    {
+                    "pip":[
+                        "azureml-defaults"
+                        ]                    
+                    } 
+                ]
+            }
+        },
+        "docker": {
+            "baseImage": "mcr.microsoft.com/azureml/base:0.2.4",
+            "enabled": true,
+            "gpuSupport": true
+        }
+    }
+}
