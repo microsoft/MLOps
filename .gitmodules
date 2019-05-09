@@ -1,0 +1,6 @@
+[submodule "examples/MLOps_VideoAnomalyDetection"]
+	path = examples/MLOps_VideoAnomalyDetection
+	url = https://github.com/microsoft/MLOps_VideoAnomalyDetection.git
+[submodule "examples/MLOpsPython"]
+	path = examples/MLOpsPython
+	url = https://github.com/microsoft/MLOpsPython.git
