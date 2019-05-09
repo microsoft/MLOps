@@ -26,3 +26,24 @@ steps:
   inputs:
     testResultsFiles: '$(Build.BinariesDirectory)/*_report.xml'
     testRunTitle: 'Publish test results'
+
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 'build-demo'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az extension add -n azure-cli-ml'
+    workingDirectory: 'model-training'
+
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 'build-demo'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az ml folder attach -w build-2019-demo -g scottgu-all-hands'
+    workingDirectory: 'model-training'
+
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 'build-demo'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az ml run submit-script -c sklearn -e test -d training-env.yml train-sklearn.py'
+    workingDirectory: 'model-training'
