@@ -1,5 +1,6 @@
 # MLOps on Azure
-[![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
+- [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
+- [Example MLOps Release Pipeline](https://dev.azure.com/aidemos/ClassicalML-BuildDemo/_release?definitionId=1)
 
 ## What is MLOps?
 MLOps empowers data scientists and app developers to help bring ML models to production. 
