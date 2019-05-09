@@ -1,4 +1,3 @@
-import pickle
 import json
 import numpy as np
 from sklearn.externals import joblib
