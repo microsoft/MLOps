@@ -2,6 +2,8 @@
 - [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
 - [Example MLOps Release Pipeline](https://dev.azure.com/aidemos/ClassicalML-BuildDemo/_release?definitionId=1)
 
+
+
 ## What is MLOps?
 MLOps empowers data scientists and app developers to help bring ML models to production. 
 MLOps enables you to track / version / audit / certify / re-use every asset in your ML lifecycle and provides orchestration services to streamline managing this lifecycle.
@@ -16,6 +18,11 @@ With Azure ML + Azure DevOps you can effectively and cohesively manage your data
 - [Azure DevOps Machine Learning extension](https://marketplace.visualstudio.com/items?itemName=ms-air-aiagility.vss-services-azureml) 
 - [Azure ML CLI](https://aka.ms/azmlcli)
 - [Set up model training & deployment with Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops)
+
+> If you are using the Machine Learning DevOps extension, you can access model name and version info using these variables:
+> - Model Name: Release.Artifacts.{alias}.DefinitionName containing model name
+> - Model Version: Release.Artifacts.{alias}.BuildNumber 
+> where alias is source alias set while adding the release artifact. 
 
 ## Getting Started / MLOps Workflow
 An example repo which exercises our recommended flow can be found [here](https://github.com/Microsoft/MLOpsPython)
