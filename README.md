@@ -49,10 +49,13 @@ We recommend the following steps in your CI process:
 We are committed to providing a collection of best-in-class solutions for MLOps, both in terms of well documented & fully managed cloud solutions, as well as reusable recipes which can help your organization to bootstrap its MLOps muscle.
 
 All of our examples will be built in the open and we welcome contributions from the community!
-- https://github.com/Microsoft/MLOpsPython
-- https://github.com/Microsoft/Recommenders
-- https://github.com/MicrosoftDocs/pipelines-azureml
-- https://github.com/Microsoft/MLOps_VideoAnomalyDetection
+- https://github.com/Microsoft/MLOpsPython (reference architecture for MLOps + python)
+- https://github.com/Microsoft/Recommenders (recommender systems with E2E mlops baked in)
+- https://github.com/MicrosoftDocs/pipelines-azureml (CI/CD with the azure ML CLI)
+- https://github.com/Microsoft/MLOps_VideoAnomalyDetection (self-supervised learning with hyperparameter tuning and automated retraining)
+- https://github.com/Azure-Samples/MLOpsDatabricks (set up MLOps with Azure ML + databricks)
+- https://github.com/roalexan/azureml#schedule-using-adf  (schedule an azure ML pipeline from an azure data factory pipeline)
+
 
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
