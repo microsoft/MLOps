@@ -1,0 +1,42 @@
+## Admin Configuration File for Azure Machine Learning Service
+
+## Configurations for the Azure Machine Learning Workspace creation
+workspace:
+  ## Subscription: Your Azure Subscription
+  subscription: 8b41ca9c-0c5a-4c01-b49b-5bb8d329cc27
+  ## Custom Name: Give a custom name to the resources. (Optional)
+  custom_name: mycustomamls
+  ## Department: 4 characters
+  department: bgmr
+  ## Team: 10 characters
+  team: bluegranit
+  ## Region: (such as `westus2` or `westeurope`)
+  region: eastus2
+  ## Region Abbreviation: 2 characters (such as such as `w2` or `we`)
+  region_abbv: e2
+  ## Environment: 3 characters (e.g. `res`, `dev`, or `pro`)
+  environment: dev
+  ## Admin Microsoft account (`user@domain.com`)
+  admin: cford@blue-granite.com
+  ## Security Group: optional
+  security_group:
+  ## ADLS: `y` to create the data lake store or `n` to skip
+  create_dls: n
+
+## Configurations for the Compute Target creation
+compute:
+  ## Nodes: Maximum number of nodes in the cluster
+  nodes: 1, 2, 1
+  ## Priority: either `lowpriority` or `dedicated`
+  priority: lowpriority, lowpriority, lowpriority
+  ## VM SKU: VM SKU from `az vm list-sizes --location <region> --output table`
+  vm_sku: STANDARD_DS3_V2, STANDARD_D13_V2, STANDARD_NV6
+  ## Cluster Name: Give a name to your new cluster. Up to 16 characters.
+  cluster_name: ds3-v2-cluster, ds13-v2-2ndclust, nv6-gpucluster
+
+## Configurations for assigning users to roles
+roles:
+  ## Team Leads: Accounts to be assigned to the Team Lead role (comma-separated list)
+  team_leads: cford@blue-granite.com, alathrop@blue-granite.com
+  ## Data Scientists: Accounts to be assigned to the Data Scientist role (comma-separated list)
+  data_scientists: alathrop@blue-granite.com, mquinn@blue-granite.com

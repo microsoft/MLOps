@@ -1,0 +1,16 @@
+{
+    "Name":"Data Scientist",
+    "IsCustom":true,
+    "Description":"Can run experiment but can't create or delete compute or request quota nor create or update support tickets including quota request",
+    "Actions":["*"],
+    "NotActions":[
+        "Microsoft.MachineLearningServices/workspaces/*/delete",
+        "Microsoft.MachineLearningServices/workspaces/computes/*/write",
+        "Microsoft.MachineLearningServices/workspaces/computes/*/delete",
+        "Microsoft.Support/supportTickets/write",
+        "Microsoft.Authorization/*/write"
+    ],
+    "AssignableScopes":[
+        "/subscriptions/8b41ca9c-0c5a-4c01-b49b-5bb8d329cc27"
+    ]
+}
