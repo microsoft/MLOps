@@ -2,7 +2,7 @@
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://deploy.azure.com/?repository=https://github.com/BlueGranite/dogbreeds/tree/colby#/form/setup)
 
-The purpose of this tutorial is to guide administrators on creating and preparing Azure Machine Learning (AzureML) service workspaces for data scientists. AzureML empowers teams to collaboratively build, train, and deploy machine learning models.
+Enterprise administrators are responsible for managing Azure Machine Learning Service (AMLS) compute quota and compute clusters. This provide guidance discusses how compute resources can be shared in AMLS, and how workspaces and compute clusters can be set up to help with resource management. Assigning right level of roles to users is an importnat task for administrators. 
 
 * [Scenarios](#scenarios)
 * [Access Azure CLI and Clone Repository](#1-access-the-azure-command-line-interface-cli-in-the-azure-portal-and-clone-the-file-repository)
