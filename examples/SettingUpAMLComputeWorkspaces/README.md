@@ -258,3 +258,5 @@ Currently, as mentioned above, the only roles assigned by the script are *Team L
 ### 5. Additional Considerations for Workspace Design
 
 - You may want to configure workspaces differently for different organizational scenarios. Common examples include team-based and project-based design. 
+
+![Impressions](https://PixelServer20190423114238.azurewebsites.net/api/impressions/MLOps/tree/master/examples/SettingUpAMLComputeWorkspaces/README.png) 
