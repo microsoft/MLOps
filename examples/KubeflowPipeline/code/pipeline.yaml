@@ -1,0 +1,287 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: tacos-vs-burritos-
+spec:
+  arguments:
+    parameters:
+    - name: tenant-id
+    - name: service-principal-id
+    - name: service-principal-password
+    - name: subscription-id
+    - name: resource-group
+    - name: workspace
+    - name: persistent-volume-name
+      value: azure
+    - name: persistent-volume-path
+      value: /mnt/azure
+    - name: data-download
+      value: https://aiadvocate.blob.core.windows.net/public/tacodata.zip
+    - name: epochs
+      value: '5'
+    - name: batch
+      value: '32'
+    - name: learning-rate
+      value: '0.0001'
+    - name: imagetag
+      value: latest
+    - name: model-name
+      value: tacosandburritos
+  entrypoint: tacos-vs-burritos
+  serviceAccountName: pipeline-runner
+  templates:
+  - container:
+      args:
+      - /scripts/data.py
+      - --base_path
+      - '{{inputs.parameters.persistent-volume-path}}'
+      - --data
+      - train
+      - --target
+      - train.txt
+      - --img_size
+      - '160'
+      - --zipfile
+      - '{{inputs.parameters.data-download}}'
+      command:
+      - python
+      image: tacoregistry.azurecr.io/c9f19f7e7fcd:test1
+      imagePullPolicy: Always
+      volumeMounts:
+      - mountPath: /mnt/azure
+        name: azure
+    inputs:
+      parameters:
+      - name: data-download
+      - name: persistent-volume-path
+    name: preprocess
+    outputs:
+      artifacts:
+      - name: mlpipeline-ui-metadata
+        optional: true
+        path: /mlpipeline-ui-metadata.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-ui-metadata.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+      - name: mlpipeline-metrics
+        optional: true
+        path: /mlpipeline-metrics.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-metrics.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+  - container:
+      args:
+      - /scripts/register.py
+      - --base_path
+      - '{{inputs.parameters.persistent-volume-path}}'
+      - --model
+      - latest.h5
+      - --model_name
+      - '{{inputs.parameters.model-name}}'
+      - --tenant_id
+      - '{{inputs.parameters.tenant-id}}'
+      - --service_principal_id
+      - '{{inputs.parameters.service-principal-id}}'
+      - --service_principal_password
+      - '{{inputs.parameters.service-principal-password}}'
+      - --subscription_id
+      - '{{inputs.parameters.subscription-id}}'
+      - --resource_group
+      - '{{inputs.parameters.resource-group}}'
+      - --workspace
+      - '{{inputs.parameters.workspace}}'
+      command:
+      - python
+      image: tacoregistry.azurecr.io/c5fc6e090d53:test1
+      imagePullPolicy: Always
+      volumeMounts:
+      - mountPath: /mnt/azure
+        name: azure
+    inputs:
+      parameters:
+      - name: model-name
+      - name: persistent-volume-path
+      - name: resource-group
+      - name: service-principal-id
+      - name: service-principal-password
+      - name: subscription-id
+      - name: tenant-id
+      - name: workspace
+    name: register
+    outputs:
+      artifacts:
+      - name: mlpipeline-ui-metadata
+        optional: true
+        path: /mlpipeline-ui-metadata.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-ui-metadata.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+      - name: mlpipeline-metrics
+        optional: true
+        path: /mlpipeline-metrics.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-metrics.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+  - dag:
+      tasks:
+      - arguments:
+          parameters:
+          - name: data-download
+            value: '{{inputs.parameters.data-download}}'
+          - name: persistent-volume-path
+            value: '{{inputs.parameters.persistent-volume-path}}'
+        name: preprocess
+        template: preprocess
+      - arguments:
+          parameters:
+          - name: model-name
+            value: '{{inputs.parameters.model-name}}'
+          - name: persistent-volume-path
+            value: '{{inputs.parameters.persistent-volume-path}}'
+          - name: resource-group
+            value: '{{inputs.parameters.resource-group}}'
+          - name: service-principal-id
+            value: '{{inputs.parameters.service-principal-id}}'
+          - name: service-principal-password
+            value: '{{inputs.parameters.service-principal-password}}'
+          - name: subscription-id
+            value: '{{inputs.parameters.subscription-id}}'
+          - name: tenant-id
+            value: '{{inputs.parameters.tenant-id}}'
+          - name: workspace
+            value: '{{inputs.parameters.workspace}}'
+        dependencies:
+        - training
+        name: register
+        template: register
+      - arguments:
+          parameters:
+          - name: batch
+            value: '{{inputs.parameters.batch}}'
+          - name: epochs
+            value: '{{inputs.parameters.epochs}}'
+          - name: learning-rate
+            value: '{{inputs.parameters.learning-rate}}'
+          - name: persistent-volume-path
+            value: '{{inputs.parameters.persistent-volume-path}}'
+        dependencies:
+        - preprocess
+        name: training
+        template: training
+    inputs:
+      parameters:
+      - name: batch
+      - name: data-download
+      - name: epochs
+      - name: learning-rate
+      - name: model-name
+      - name: persistent-volume-path
+      - name: resource-group
+      - name: service-principal-id
+      - name: service-principal-password
+      - name: subscription-id
+      - name: tenant-id
+      - name: workspace
+    name: tacos-vs-burritos
+  - container:
+      args:
+      - /scripts/train.py
+      - --base_path
+      - '{{inputs.parameters.persistent-volume-path}}'
+      - --data
+      - train
+      - --epochs
+      - '{{inputs.parameters.epochs}}'
+      - --batch
+      - '{{inputs.parameters.batch}}'
+      - --image_size
+      - '160'
+      - --lr
+      - '{{inputs.parameters.learning-rate}}'
+      - --outputs
+      - model
+      - --dataset
+      - train.txt
+      command:
+      - python
+      image: tacoregistry.azurecr.io/388b206172d9:test1
+      resources:
+        requests:
+          memory: "2600Mi"
+      imagePullPolicy: Always
+      volumeMounts:
+      - mountPath: /mnt/azure
+        name: azure
+    inputs:
+      parameters:
+      - name: batch
+      - name: epochs
+      - name: learning-rate
+      - name: persistent-volume-path
+    name: training
+    outputs:
+      artifacts:
+      - name: mlpipeline-ui-metadata
+        optional: true
+        path: /mlpipeline-ui-metadata.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-ui-metadata.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+      - name: mlpipeline-metrics
+        optional: true
+        path: /mlpipeline-metrics.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-metrics.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+  volumes:
+  - name: azure
+    persistentVolumeClaim:
+      claimName: azure-managed-disk
