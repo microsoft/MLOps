@@ -59,7 +59,7 @@ To create an ML workspace:
 2. Select the **add a new resource** option. 
 3. Search for **Machine Learning Studio Workspace** and use the default options, taking note of the name you decide for it. 
 
-<img src="/docs/azure/images/creatingWS.PNG" 
+<img src="/images/creatingWS.PNG" 
     alt="Creating a Workspace"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
@@ -73,7 +73,7 @@ To create a container registry:
 3. Search for **Container Registry** and add it to your resource group.
 4. Configure your registry by selecting and noting the name you use for it. Enable an **admin user**, and change the SKU option to **Premium**. 
 
-<img src="/docs/azure/images/createContainerReg.PNG" 
+<img src="/images/createContainerReg.PNG" 
     alt="Creating a Container Registry"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
@@ -93,17 +93,17 @@ To create an app registration:
 
 1. In the Azure Portal, navigate to [**Azure Active Directory**](https://ms.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview). 
 2. Select **App registrations** and click **New registration**. Name it, noting the name and use the default options. 
-3. Click **Register**. <img src="/docs/azure/images/appReg.PNG" 
+3. Click **Register**. <img src="/images/appReg.PNG" 
     alt="Creating a App Registration"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
 4. You should be redirected to your app registration’s dashboard. Select **Overview** from the sidebar. 
-5. Make note of the **Application (client) ID** and the **Directory (tenant) ID**. The client ID is your service principal username. Save these in a secure location. <img src="/docs/azure/images/clientID2.PNG" 
+5. Make note of the **Application (client) ID** and the **Directory (tenant) ID**. The client ID is your service principal username. Save these in a secure location. <img src="/images/clientID2.PNG" 
     alt="Client ID location"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
 6. Select **Certificates and Secrets** from the sidebar. 
-7. Select **New client secret**. Give the client secret a description and select how long you would like it to remain active for. Once you click the **Add** button, make sure you take note of the client secret value and save it in a secure place. This is your service principal password. <img src="/docs/azure/images/password.PNG" 
+7. Select **New client secret**. Give the client secret a description and select how long you would like it to remain active for. Once you click the **Add** button, make sure you take note of the client secret value and save it in a secure place. This is your service principal password. <img src="/images/password.PNG" 
     alt="Client secret location"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
@@ -115,7 +115,7 @@ To add a role assignment for your service principal:
 3. Set the role to **Contributor** and search for the name you gave your app registration in the **Select** dropdown. 
 4. Click **Save**. 
 
-<img src="/docs/azure/images/roleAssign.PNG" 
+<img src="/images/roleAssign.PNG" 
     alt="Creating a Role Assignment"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
@@ -173,19 +173,19 @@ To compile the pipeline, simply open a terminal and navigate to the azurepipelin
 ### Run and deploy
 Upload the pipeline.tar.gz file to the pipelines dashboard on your Kubeflow deployment.
 
-<img src="/docs/azure/images/pipelinedash.PNG" 
+<img src="/images/pipelinedash.PNG" 
     alt="Pipeline Dashboard"
     class="mt-3 mb-3 p-3 border border-info rounded">
  
  Create an experiment and then create a run using the pipeline you just uploaded. 
 
- <img src="/docs/azure/images/pipelinesInput.png" 
+ <img src="/images/pipelinesInput.png" 
     alt="Pipelines input example"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
  The finished pipeline should have five completed steps.
 
- <img src="/docs/azure/images/finishedRunning.PNG" 
+ <img src="/images/finishedRunning.PNG" 
     alt="Finished Pipeline"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
@@ -194,7 +194,7 @@ Once your pipeline has finished successfully, you can visit the Azure portal to 
 
 The easiest method is to find a url of an image of a taco or a burrito and append it to your scoring url as follows: `<scoring_url>?image=<image_url>`
 
-<img src="/docs/azure/images/finalOutput.PNG" 
+<img src="/images/finalOutput.PNG" 
     alt="Final ML model deployment"
     class="mt-3 mb-3 p-3 border border-info rounded">
 
