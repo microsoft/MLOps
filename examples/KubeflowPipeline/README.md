@@ -1,4 +1,4 @@
-# End-to-End Pipeline Example on Azure"
+# End-to-End Pipeline Example on Azure
 #### An end-to-end guide to creating a pipeline in Azure that can train, register, and deploy an ML model that can recognize the difference between tacos and burritos
 ## Introductions
 ### Overview of Azure and AKS
