@@ -5,5 +5,5 @@ while getopts "r:" option;
         r ) REGISTRY_NAME=${OPTARG};;
     esac
 done
-IMAGE=${REGISTRY_NAME}.azurecr.io/training
+IMAGE=${REGISTRY_NAME}.azurecr.io/deploy
 docker build -t $IMAGE . && docker run -it $IMAGE
