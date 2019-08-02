@@ -143,7 +143,7 @@ do
 	az role assignment create --role 'Reader' --assignee $admin  --resource-group $resourcegroup_name
 
 	echo "+ Share Workspace: "$admin
-	az ml workspace share -w $workspace_name -g $resourcegroup_name --role "Data Scientist" --user $admin
+	az ml workspace share -w $workspace_name -g $resourcegroup_name --role "Team Lead" --user $admin
 
 	echo "+ App Insights (Owner): "$admin
 	az role assignment create --role 'Owner' --assignee $admin --scope $applicationInsights_provider
@@ -228,4 +228,4 @@ done
 
 export WORKSPACE=\"$workspace_name\"
 export SUBSCRIPTION_ID=\"$SUBSCRIPTION_ID\"
-export CLUSTER_NAME=\"$computetarget_name\""
+export CLUSTER_NAME=\"$computetarget_name\"
