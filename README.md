@@ -55,6 +55,7 @@ All of our examples will be built in the open and we welcome contributions from 
 - https://github.com/Microsoft/MLOps_VideoAnomalyDetection (self-supervised learning with hyperparameter tuning and automated retraining)
 - https://github.com/Azure-Samples/MLOpsDatabricks (set up MLOps with Azure ML + databricks)
 - https://github.com/roalexan/azureml#schedule-using-adf  (schedule an azure ML pipeline from an azure data factory pipeline)
+- https://www.azuredevopslabs.com/labs/vstsextend/aml/ (automated template to deploy MLOps on ADO)
 
 
 ## How is MLOps different from DevOps?
