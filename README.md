@@ -56,7 +56,7 @@ All of our examples will be built in the open and we welcome contributions from 
 - https://github.com/Azure-Samples/MLOpsDatabricks (set up MLOps with Azure ML + databricks)
 - https://github.com/roalexan/azureml#schedule-using-adf  (schedule an azure ML pipeline from an azure data factory pipeline)
 - https://www.azuredevopslabs.com/labs/vstsextend/aml/ (automated template to deploy MLOps on ADO)
-
+- https://github.com/Azure/ACE_Azure_ML/tree/master/devops (set up azure ML + azure DevOps together for predictive maintenance)
 
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
