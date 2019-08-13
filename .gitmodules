@@ -6,4 +6,4 @@
 	url = https://github.com/microsoft/MLOpsPython.git
 [submodule "examples/MLOpsDatabricks"]
 	path = examples/MLOpsDatabricks
-	url = https://https://github.com/azure-samples/MLOpsDatabricks.git
+	url = https://github.com/azure-samples/MLOpsDatabricks.git
