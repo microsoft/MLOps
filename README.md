@@ -81,7 +81,7 @@ All of our examples will be built in the open and we welcome contributions from 
 
 **Model deployment & monitoring**
 - Release models with confidence
-- Monitor & know when to retrain
+- Monitor & know when to retrain by analyzing signals such as data drift
 
 # Contributing
 
