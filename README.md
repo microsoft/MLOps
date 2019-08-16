@@ -1,7 +1,7 @@
 # MLOps on Azure
 - [Example MLOps Release Pipeline](https://dev.azure.com/aidemos/ClassicalML-BuildDemo/_release?definitionId=1)
 - [MLOps Architecture Deep Dive-  YouTube](https://www.youtube.com/watch?v=nst3UAGpiBA)
-
+- [Official Python Azure MLOps repo](https://github.com/Microsoft/MLOpsPython)
 
 ## What is MLOps?
 MLOps empowers data scientists and app developers to help bring ML models to production. 
