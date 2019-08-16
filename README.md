@@ -1,4 +1,5 @@
 # MLOps on Azure
+- [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
 - [Example MLOps Release Pipeline](https://dev.azure.com/aidemos/ClassicalML-BuildDemo/_release?definitionId=1)
 - [MLOps Architecture Deep Dive-  YouTube](https://www.youtube.com/watch?v=nst3UAGpiBA)
 - [Official Python Azure MLOps repo](https://github.com/Microsoft/MLOpsPython)
