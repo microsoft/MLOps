@@ -46,7 +46,7 @@ We recommend the following steps in your CI process:
 - Define your deployment as a [gated release](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/approvals/gates?view=azure-devops). This means that once the model web service deployment in the Staging/QA environment is successful, a notification is sent to approvers to manually review and approve the release. Once the release is approved, the model scoring web service is deployed to [Azure Kubernetes Service(AKS)](https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes) and the deployment is tested.
 
 # MLOps Solutions
-We are committed to providing a collection of best-in-class solutions for MLOps, both in terms of well documented & fully managed cloud solutions, as well as reusable recipes which can help your organization to bootstrap its MLOps muscle.
+We are committed to providing a collection of best-in-class solutions for MLOps, both in terms of well documented & fully managed cloud solutions, as well as reusable recipes which can help your organization to bootstrap its MLOps muscle. These examples are community supported and are not guaranteed to be up-to-date as new features enter the product.
 
 All of our examples will be built in the open and we welcome contributions from the community!
 - https://github.com/Microsoft/MLOpsPython (reference architecture for MLOps + python)
