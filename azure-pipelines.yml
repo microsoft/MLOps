@@ -6,14 +6,12 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+pool: 
+  vmImage: 'ubuntu-latest'
+
+container: mcr.microsoft.com/mlops/python:latest
 
 steps:
-- task: UsePythonVersion@0
-  displayName: 'Use Python 3.6'
-  inputs:
-    versionSpec: 3.6
     
 - script: |
    pip install flake8
@@ -26,38 +24,3 @@ steps:
   inputs:
     testResultsFiles: '$(Build.BinariesDirectory)/*_report.xml'
     testRunTitle: 'Publish test results'
-
-- task: AzureCLI@1
-  inputs:
-    azureSubscription: 'build-demo'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az extension add -n azure-cli-ml'
-    workingDirectory: 'model-training'
-
-- task: AzureCLI@1
-  inputs:
-    azureSubscription: 'build-demo'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az ml folder attach -w build-2019-demo -g scottgu-all-hands'
-    workingDirectory: ''
-
-- task: AzureCLI@1
-  inputs:
-    azureSubscription: 'build-demo'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az ml run submit-script -c sklearn -e test -d training-env.yml train-sklearn.py'
-    workingDirectory: 'model-training'
-
-- task: AzureCLI@1
-  inputs:
-    azureSubscription: 'build-demo'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az ml model register -n mymodel -p sklearn_regression_model.pkl -t model.json'
-    workingDirectory: 'model-deployment'
-    
-- task: AzureCLI@1
-  inputs:
-    azureSubscription: 'build-demo'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az ml model deploy -n acicicd -f model.json --ic inferenceConfig.yml --dc aciDeploymentConfig.yml --overwrite'
-    workingDirectory: 'model-deployment'
