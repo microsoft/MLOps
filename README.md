@@ -1,3 +1,14 @@
+---
+page_type: sample
+languages:
+- python
+products:
+- azure
+- azure-machine-learning-service
+- azure-devops
+description: "A collection of examples showing different end to end scenarios operationalizing ML workflows with Azure Machine Learning."
+---
+
 # MLOps on Azure
 - [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
 - [Example MLOps Release Pipeline](https://dev.azure.com/aidemos/ClassicalML-BuildDemo/_release?definitionId=1)
