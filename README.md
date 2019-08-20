@@ -6,7 +6,7 @@ products:
 - azure
 - azure-machine-learning-service
 - azure-devops
-description: "A collection of examples showing different end to end scenarios operationalizing ML workflows with Azure Machine Learning."
+description: "A collection of examples showing different end to end scenarios operationalizing ML workflows with Azure Machine Learning, integrated with GitHub and other Azure services such as Data Factory and DevOps."
 ---
 
 # MLOps on Azure
