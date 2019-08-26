@@ -5,7 +5,7 @@ This sample is an update of the customer churn sample previously made available 
 
 https://github.com/Azure-Samples/MachineLearningSamples-ChurnPrediction
 
-The latest Azureml-sdk tested on 1.0.57
+The latest Azureml-sdk tested wirh 1.0.57
 
 ## Changes introduced:
 - Training using Azure Machine Learning Service pipeline.
