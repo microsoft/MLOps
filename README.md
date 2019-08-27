@@ -69,7 +69,7 @@ All of our examples will be built in the open and we welcome contributions from 
 - https://github.com/roalexan/azureml#schedule-using-adf  (schedule an azure ML pipeline from an azure data factory pipeline)
 - https://www.azuredevopslabs.com/labs/vstsextend/aml/ (automated template to deploy MLOps on ADO)
 - https://github.com/Azure/ACE_Azure_ML/tree/master/devops (set up azure ML + azure DevOps together for predictive maintenance)
-
+- https://github.com/microsoft/nlp ( Natural language processing examples using MLOps + GitHub + Azure)
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
 - Digital audit trail requirements change when dealing with code + (potentially customer) data
