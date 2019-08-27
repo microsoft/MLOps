@@ -7,3 +7,6 @@
 [submodule "examples/MLOpsDatabricks"]
 	path = examples/MLOpsDatabricks
 	url = https://github.com/azure-samples/MLOpsDatabricks.git
+[submodule "examples/azureml-compute-debugging-pycharm"]
+	path = examples/Pycharm-Debugging
+	url = https://github.com/ezwiefel/azureml-compute-debugging-pycharm
