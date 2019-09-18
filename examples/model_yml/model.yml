@@ -1,0 +1,40 @@
+specVersion: 0.0.1
+
+runtimeArtifacts:
+  model_file: http://github.com/example.pkl
+
+framework:
+  name: sklearn
+  version: 0.21.1
+
+modelName: mymodel
+modelVersion: 2
+time_created: 2019-01-12T22:53:18+00:00
+
+created_by: sam@rockwell.com
+purpose: binary_classification
+
+runtime_metadata:
+    inputSchema: List<string[8]>
+    outputSchema:  List<bool>
+    resourceRequirements:
+        cpu: 2
+        memory: 2GB
+    sampleInputs: [input.json]
+    sampleOutputs: [output.json]
+    runtimeEnv: (optional for well known, required for custom)
+
+custom:
+  origin:
+    codeAssets: xxx
+    dataAssets: xxx
+    created_by: xxx
+    pipeline: xxx
+    logs: xxx
+  expiry: xxx
+    tags:
+        key: value 
+    metrics:
+        key: value
+        latency: 0.01
+    
