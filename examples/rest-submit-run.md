@@ -1,0 +1,178 @@
+# Submitting a run using REST API
+
+This example shows you how to submit a simple remote run using REST API
+
+## Pre-requisites
+
+ * You have owner permissions to Azure Subscription
+ * You have created Azure Machine Learning Workspace
+ * The workspace has Machine Learning Compute resource for the remote run.
+ * You have local Python 3 with [requests](https://pypi.org/project/requests/) and [adal](https://pypi.org/project/adal/) packages installed.
+
+## Obtain client ID and secret
+
+To authenticate against Azure from REST client, you need to perform App Registration that creates a service principal that can access your workspace with client ID and client secret. 
+
+### Option 1: Use Portal
+
+Go to [Azure Portal](portal.azure.com), and navigate to __Active Directory__ > __App Registration__. Select __+New registration__ and create new App Registration using default settings. Copy the Application (Client) ID to use in next step.
+
+Then, navigate to the newly created App Registration, select __Certificates & secrets__ and create a new client secret. Copy the client secret to a safe location to use in next step.
+
+Finally to grant , navigate to your Azure Machine Learning Workspace. Go to __Access control (IAM)__, select __Add a role assignment__ and add the App Registration (service principal) as Contributor to your workspace.
+
+### Option 2: Use Azure CLI
+
+Alternatively, you can use following Azure CLI commands to create the service principal and obtain credentials, and assign the role to the workspace.
+
+```azurecli
+# Create the SP
+az ad sp create-for-rbac --sdk-auth --name <my-sp-name>
+
+# Assign a role in the workspace
+az ml workspace share -w <my-workspace> -g <my-resource-group> --user <my-sp-name> --role <whatever-role-to-assign-sp>
+```
+
+## Authenticate against Azure
+
+To perform REST call against Azure Machine Learning services, you need to obtain authentication token from Azure management service. Fill the client id, secret, workspace information and your login name in the code below.
+
+```python
+import requests
+import json
+import time
+from adal import AuthenticationContext
+
+client_id = "<my-client-id>"
+client_secret = "<my-clent-secret>"
+
+region = "<my-workspace-region>"
+subid = "<my-subscription-id>"
+ws = "<my-workspace-name>"
+rg = "<my-workspace-resource-group>"
+
+hosturl = "https://{}.api.azureml.ms/".format(region)
+
+auth_context = AuthenticationContext("https://login.microsoftonline.com/<my-user-name>.onmicrosoft.com")
+
+resp = auth_context.acquire_token_with_client_credentials("https://management.azure.com/",client_id,client_secret)
+
+token = resp["accessToken"]
+```
+
+## Create or get an experiment
+
+Oncy you have obtained a token, you can use it to make authorized calls against Azure Machine Learning services. 
+
+First, call run history service to create an experiment under which the run is submitted.
+
+```python
+header = {'Authorization': 'Bearer ' + token}
+
+historybase = "history/v1.0/"
+resourcebase = "subscriptions/{}/resourceGroups/{}/providers/Microsoft.MachineLearningServices/workspaces/{}/".format(subid,rg,ws)
+
+experiment_name = "new_experiment"
+
+create_experiment = hosturl + historybase + resourcebase + "experiments/{}".format(experiment_name)
+resp = requests.post(create_experiment, headers=header)
+print(resp.text)
+```
+
+You can also get an existing experiment
+
+```python
+get_experiment = hosturl + historybase + resourcebase + "experiments/{}".format(experiment_name)
+resp = requests.get(get_experiment, headers=header)
+print(resp.text)
+```
+
+## Prepare files for run
+
+To submit a run, prepare two files: a zip folder that contains your training script, called project.zip, and definition.json file. Place these two files in the working directory of your local Python interpreter.
+
+The project.zip should have following hello.py Python file at its root:
+
+```python
+# hello.py
+print("Hello!")
+```
+
+Use following definition.json file:
+
+
+
+```json
+{
+    "Configuration":{  
+       "Script":"hello.py",
+       "Arguments":[  
+          "234"
+       ],
+       "SourceDirectoryDataStore":null,
+       "Framework":"Python",
+       "Communicator":"None",
+       "Target":"cpu-cluster",
+       "MaxRunDurationSeconds":1200,
+       "NodeCount":1,
+       "Environment":{  
+          "Python":{  
+             "InterpreterPath":"python",
+             "UserManagedDependencies":false,
+             "CondaDependencies":{  
+                "name":"project_environment",
+                "dependencies":[  
+                   "python=3.6.2",
+                   {  
+                      "pip":[  
+                         "azureml-defaults"
+                      ]
+                   }
+                ]
+             }
+          },
+          "Docker":{  
+             "BaseImage":"mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04"
+          }
+      },
+       "History":{  
+          "OutputCollection":true
+       }
+    }
+}
+```
+
+## Submit run
+
+Submit a run by making a multi-part POST request against execution service with the 2 files from previous step
+
+```python
+executionbase = "execution/v1.0/"
+resourcebase = "subscriptions/{}/resourceGroups/{}/providers/Microsoft.MachineLearningServices/workspaces/{}/".format(subid,rg,ws)
+
+start_run = hosturl+ executionbase + resourcebase + "experiments/{}/startrun".format(experiment_name)
+
+run_files = {"runDefinitionFile": ("definition.json", open("definition.json","rb")), "projectZipFile": ("project.zip", open("project.zip","rb"))}
+
+resp = requests.post(start_run, files=run_files, headers=header)
+
+print("response text: ", json.loads(resp.text))
+```
+
+## Monitor status of run
+
+You can track the status of the run by polling the run history service.
+
+```python
+run_id = json.loads(resp.text)["runId"]
+
+get_run = hosturl + historybase + resourcebase + "experiments/{}/runs/{}".format(experiment_name,run_id)
+
+status = None
+
+while status not in ["Completed", "Failed", "Cancelled"]:
+    time.sleep(5)
+    resp = requests.get(get_run, headers=header)
+    status = json.loads(resp.text)["status"]
+    print(status)
+```
