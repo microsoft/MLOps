@@ -11,7 +11,7 @@ description: "MLOps end to end examples & solutions. A collection of examples sh
 
 # MLOps on Azure
 - [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
-- [Example MLOps Release Pipeline](https://dev.azure.com/aidemos/ClassicalML-BuildDemo/_release?definitionId=1)
+- [Example MLOps Release Pipeline](https://dev.azure.com/customai/DevopsForAI-AML/_release?view=all&_a=releases&definitionId=16)
 - [MLOps Architecture Deep Dive-  YouTube](https://www.youtube.com/watch?v=nst3UAGpiBA)
 - [Official Python Azure MLOps repo](https://github.com/Microsoft/MLOpsPython)
 
