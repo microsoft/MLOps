@@ -1,0 +1,14 @@
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository universe
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget unzip python-pip python-sklearn python-pandas python-numpy python-matplotlib software-properties-common python-software-properties
+RUN apt-get update -q
+RUN apt-get install -y openjdk-8-jdk
+RUN apt-get install -y ant
+RUN apt-get clean
+RUN apt-get update && \
+    apt-get install ca-certificates-java && \
+    apt-get clean && \
+    update-ca-certificates -f;
+RUN apt-get clean
+  
