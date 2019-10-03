@@ -239,9 +239,7 @@ Use following definition.json file:
 ```json
 {
 	"configuration": {
-        // The script to run.
         "script": "project/tf_mnist_train.py",
-        // The arguments to the script file.
         "arguments": [
             "--minibatch_size",
             "64",
@@ -253,23 +251,14 @@ Use following definition.json file:
             "outputs",
             "--num_iterations",
             "1000"],
-        // Framework to execute inside. Allowed values are "Python" ,  "PySpark", "CNTK",  "TensorFlow", and "PyTorch".
         "framework": "Python",
-        // Communicator for the given framework. Allowed values are "None" ,  "ParameterServer", "OpenMpi", and "IntelMpi".
         "communicator": "None",
-        // The name of the compute target to use for this run.
         "target": "testCompute",
-        // Maximum allowed duration for the run.
         "maxRunDurationSeconds": null,
-        // Number of nodes to use for running job.
         "nodeCount": 1,
-        // Environment details.
         "environment": {
-            // Python details
             "python": {
-                // The python interpreter path
                 "interpreterPath": "python",
-                // user_managed_dependencies=True indicates that the environment will be user managed. False indicates that AzureML will manage the user environment.
                 "userManagedDependencies": true,
                 "condaDependencies": {
                     "name": "project_environment",
@@ -278,30 +267,21 @@ Use following definition.json file:
                         }]
                 }
             },
-            // Environment variables set for the run.
             "environmentVariables": {
                 "EXAMPLE_ENV_VAR": "EXAMPLE_VALUE"
             },
-            // Docker details
             "docker": {
-                // Base image used for Docker-based runs.
                 "baseImage": "tensorflow:1.13-cpu",
                 "baseDockerfile": null,
                 "arguments": [],
-                // Image registry that contains the base image.
                 "baseImageRegistry": {
-                    // DNS name or IP address of azure container registry(ACR)
                     "address": "mycontainer.azurecr.io",
-                    // The username for ACR. Set to null if it is a public image
                     "username": "mycontainer",
-                    // The password for ACR. Set to null if it is a public image
                     "password": "*********"
 				}
             }
         },
-        // History details.(This outcollection isdecided to set to true by default to keep RH)
         "history": {
-            // Enable history tracking -- this allows status, logs, metrics, and outputs to be collected for a run.
             "outputCollection": true,
         }
     },
