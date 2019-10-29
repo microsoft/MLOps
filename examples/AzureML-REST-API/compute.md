@@ -168,3 +168,42 @@ delete_compute_url = "https://management.azure.com/subscriptions/{}/resourceGrou
 resp = requests.delete(delete_compute_url, headers=header)
 print resp.text
 ```
+
+## Get AML Compute
+ - Need "token" from Authenticate against Azure
+ - Need a existed AML workspace
+ - Need a existed AML compute
+```python
+subid =  "<my-subscription-id>" 
+rg =  "<my-workspace-resource-group>" 
+ws =  "<my-workspace-name>" 
+api_version =  "2019-06-01"
+
+# the compute name 
+compute_name = "<compute name>"
+
+header = {'Authorization': 'Bearer ' + token, "Content-type": "application/json"}
+get_compute_url = "https://management.azure.com/subscriptions/{}/resourceGroups/{}/providers/Microsoft.MachineLearningServices/workspaces/{}/computes/{}?api-version={}".format(subid, rg, ws, compute_name, api_verison)
+
+resp = requests.get(get_compute_url, headers=header)
+print resp.text
+```
+
+## List AML Compute By Worksapce
+ - Need "token" from Authenticate against Azure
+ - Need a existed AML workspace
+```python
+subid =  "<my-subscription-id>" 
+rg =  "<my-workspace-resource-group>" 
+ws =  "<my-workspace-name>" 
+api_version =  "2019-06-01"
+
+header = {'Authorization': 'Bearer ' + token, "Content-type": "application/json"}
+list_compute_by_workspace_url = "https://management.azure.com/subscriptions/{}/resourceGroups/{}/providers/Microsoft.MachineLearningServices/workspaces/{}/computes?api-version={}".format(subid, rg, ws, api_verison)
+
+resp = requests.get(list_compute_by_workspace_url , headers=header)
+print resp.text
+```
+
+## Reference
+[RestAPI Official Guide](https://review.docs.microsoft.com/en-us/rest/api/machinelearningservices/workspacesandcompute/machinelearningcompute)

@@ -159,3 +159,19 @@ resp = requests.delete(delete_datastore_url, headers=header)
 
 print resp.text
 ```
+
+## List AML datastore by workspace
+ - Need "token" from Authenticate against Azure
+ - Need a existed AML workspace
+```python
+subid = "<subscription-id>" 
+rg = "<workspace-resource-group>" 
+ws = "<workspace-name>" 
+location_of_aml_workspace = "<workspace location>"
+
+header = {'Authorization': 'Bearer ' + token, "Content-type": "application/json"}
+list_datastore_by_workspace_url = "https://{}.experiments.azureml.net/datastore/v1.0/subscriptions/{}/resourceGroups/{}/providers/Microsoft.MachineLearningServices/workspaces/{}/datastores".format(location_of_aml_workspace, subid, rg, ws)
+resp = requests.get(list_datastore_by_workspace_url, headers=header)
+
+print resp.text
+```
