@@ -64,11 +64,14 @@ token = resp["accessToken"]
 ```
 
 ## Create AML Workspace 
- - Need "token" from Authenticate against Azure
- -  You have created Azure Application Insights
--   You have created Azure KeyVault
--   You have created Azure Storage Account
--   You have created Azure Container Registry
+
+
+### option 1: using REST API
+- Need "token" from Authenticate against Azure
+- You have created Azure Application Insights
+- You have created Azure KeyVault
+- You have created Azure Storage Account
+- You have created Azure Container Registry
 
 ```python
 container_registry_name = "<your azure container register>"
@@ -104,6 +107,9 @@ resp = requests.put(create_workerspace_url, headers=header, json=body)
 print(resp.text)
 
 ```
+
+### option 2: azure portal
+It is the easiest way to create aml workspace through azure portal. Here is the [official guide](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-manage-workspace).
 
 ## Get/Delete/List AML Workspace
  - Need "token" from Authenticate against Azure
