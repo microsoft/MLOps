@@ -60,7 +60,7 @@ resp = auth_context.acquire_token_with_client_credentials("https://management.az
 token = resp["accessToken"]
 ```
 
-## Create AML Compute
+## Create/Update AML Compute
 
  - Need "token" from Authenticate against Azure
  - Need a existed AML workspace
