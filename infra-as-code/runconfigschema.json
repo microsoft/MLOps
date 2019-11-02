@@ -1,0 +1,1287 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "RunConfiguration",
+  "type": "object",
+  "required": [
+    "script",
+    "environment"
+  ],
+  "properties": {
+    "script": {
+      "type": "string",
+      "description": "The relative path to the python script file. The file path is relative to the source_directory passed to submit run.\nExample: train.py",
+      "minLength": 1
+    },
+    "arguments": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Command line arguments for the python script file.\nExample: [\"234\"]",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceDirectoryDataStore": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "The attribute is used to configure the backing datastore for the project share.\nExample: my-source-store"
+    },
+    "framework": {
+      "description": "The supported frameworks are Python, PySpark, CNTK, TensorFlow, and PyTorch. Use Tensorflow for AmlCompute clusters, and Python for distributed training jobs.\nRemarks: If framework is set to PySpark, then spark field is required.\nIf framework is set to TensorFlow then tensorflow field is required.\nExample: Python",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Framework"
+        }
+      ]
+    },
+    "communicator": {
+      "description": "The supported communicators are None, ParameterServer, OpenMpi, and IntelMpi Keep in mind that OpenMpi requires a custom image with OpenMpi installed.\nUse ParameterServer or OpenMpi for AmlCompute clusters. Use IntelMpi for distributed training jobs.\nRemarks: If communicator is set to Mpi, then mpi field is required.\nExample: None",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/Communicator"
+        }
+      ]
+    },
+    "target": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "Target refers to compute where the job is scheduled for execution. The default target is \"local\" refering to the local machine.\nRemarks: If target is amlcompute then amlCompute field is required.\nExample: amlcompute"
+    },
+    "dataReferences": {
+      "type": [
+        "null",
+        "object"
+      ],
+      "description": "Data reference configuration details. All the data sources are made available to the run during execution based on each configuration.\n",
+      "additionalProperties": {
+        "$ref": "#/definitions/DataReferenceConfiguration"
+      }
+    },
+    "jobName": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "description": "This is primarily intended for notebooks to override the default job name.\nDefaults to ArgumentVector[0] if not specified.\nExample: FindSquaresJob"
+    },
+    "autoPrepareEnvironment": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Defaulted to True, but if set to False the run will fail if no environment was found matching the requirements specified.\nThis can be set to False to fail fast when the environment is not found in the cache.\nExample: True"
+    },
+    "maxRunDurationSeconds": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Maximum allowed time for the run. The system will attempt to automatically cancel the run if it took longer than this value.\nMaxRunDurationSeconds=null means infinite duration.\nExample: 84000",
+      "format": "int64"
+    },
+    "nodeCount": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Number of compute nodes to run the job on. Only applies to AMLCompute.\nExample: 1",
+      "format": "int32"
+    },
+    "environment": {
+      "description": "The environment definition, This field configures the python environment.\nIt can be configured to use an existing Python environment or configured to setup a temp environment for the experiment.\nThe definition is also responsible for setting the required application dependencies.\n",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/EnvironmentDefinition"
+        }
+      ]
+    },
+    "history": {
+      "description": "This section is used to disable and enable experiment history logging features.\n",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/HistoryConfiguration"
+        }
+      ]
+    },
+    "spark": {
+      "description": "Spark configuration details. When the platform is set to Pyspark, then the spark configuration is used to set the default sparkconf for the submitted job.\n",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/SparkConfiguration"
+        }
+      ]
+    },
+    "batchAi": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/BatchAiConfiguration"
+        }
+      ]
+    },
+    "amlCompute": {
+      "description": "The attribute is used to configure details of the compute target to be created during experiment.\nThe configuration only takes effect when the target is set to \"amlcompute\".\n",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/AMLComputeConfiguration"
+        }
+      ]
+    },
+    "tensorflow": {
+      "description": "The attribute is used to configure the distributed tensorflow parameters.\nThis attribute takes effect only when the framework is set to TensorFlow, and the communicator to ParameterServer.\nAmlCompute is the only supported compute for this configuration.\n",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/TensorflowConfiguration"
+        }
+      ]
+    },
+    "mpi": {
+      "description": "The attribute is used to configure the distributed MPI job parameters.\nThis attribute takes effect only when the framework is set to Python, and the communicator to OpenMpi or IntelMpi.\nAmlComppute is the only supported compute type for this configuration.\n",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/MpiConfiguration"
+        }
+      ]
+    },
+    "hdi": {
+      "description": "This attribute takes effect only when the target is set to an Azure HDI compute.\nThe HDI Configuration is used to set the YARN deployment mode. It is defaulted to cluster mode.\n",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/HdiConfiguration"
+        }
+      ]
+    },
+    "containerInstance": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/ContainerInstanceConfiguration"
+        }
+      ]
+    },
+    "exposedPorts": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Currently unused.\n",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "prepareEnvironment": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "definitions": {
+    "Framework": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Python",
+        "PySpark",
+        "Cntk",
+        "TensorFlow",
+        "PyTorch",
+        "TensorFlowParameterServer",
+        "PythonMpi",
+        "PythonIntelMpi",
+        "PySparkInteractive"
+      ],
+      "enum": [
+        "Python",
+        "PySpark",
+        "Cntk",
+        "TensorFlow",
+        "PyTorch",
+        "TensorFlowParameterServer",
+        "PythonMpi",
+        "PythonIntelMpi",
+        "PySparkInteractive"
+      ]
+    },
+    "Communicator": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "ParameterServer",
+        "OpenMpi",
+        "IntelMpi",
+        "Gloo",
+        "Mpi"
+      ],
+      "enum": [
+        "None",
+        "ParameterServer",
+        "OpenMpi",
+        "IntelMpi",
+        "Gloo",
+        "Mpi"
+      ]
+    },
+    "DataReferenceConfiguration": {
+      "type": "object",
+      "description": "A class for managing DataReferenceConfiguration.\n",
+      "properties": {
+        "dataStoreName": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the data store.\nExample: myblobstore"
+        },
+        "mode": {
+          "description": "Operation on the datastore, mount, download, upload.\nExample: Mount",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/DataStoreMode"
+            }
+          ]
+        },
+        "pathOnDataStore": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Relative path on the datastore.\nExample: /images/validation"
+        },
+        "pathOnCompute": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The path on the compute target.\n"
+        },
+        "overwrite": {
+          "type": "boolean",
+          "description": "Whether to overwrite the data if existing.\nExample: False"
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Data references configuration template.",
+          "description": "Data references configuration template.",
+          "body": {
+            "dataStoreName": "",
+            "mode": "",
+            "overwrite": ""
+          }
+        }
+      ]
+    },
+    "DataStoreMode": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Mount",
+        "Download",
+        "Upload"
+      ],
+      "enum": [
+        "Mount",
+        "Download",
+        "Upload"
+      ]
+    },
+    "EnvironmentDefinition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The name of the environment.\nRemarks: Read-only from a contract perspective; set with URI fields on the relevant APIs.\nExample: mydevenvironment"
+        },
+        "version": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The environment version.\nRemarks: Read-only from a contract perspective; set with URI fields on the relevant APIs.\nExample: 1"
+        },
+        "python": {
+          "description": "Settings for a Python environment.\n",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/PythonSection"
+            }
+          ]
+        },
+        "environmentVariables": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "description": "Definition of environment variables to be defined in the environment.\n",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "docker": {
+          "description": "The definition of a Docker container.\n",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/DockerSection"
+            }
+          ]
+        },
+        "spark": {
+          "description": "The configuration for a Spark environment.\n",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/SparkSection"
+            }
+          ]
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Environment definition configuration template.",
+          "description": "Environment definition configuration template.",
+          "body": {
+            "python": {
+              "interpreterPath": "python",
+              "userManagedDependencies": false,
+              "condaDependencies": {
+                "dependencies": [
+                  "python=3.6.2",
+                  {
+                    "pip": [
+                      "azureml-defaults"
+                    ]
+                  }
+                ]
+              }
+            },
+            "docker": {
+              "baseImage": "mcr.microsoft.com/azureml/base:0.2.2",
+              "enabled": false,
+              "baseImageRegistry": {
+                "address": "",
+                "username": "",
+                "password": ""
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PythonSection": {
+      "type": "object",
+      "properties": {
+        "interpreterPath": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The python interpreter path. This is only used when user_managed_dependencies=True.\n"
+        },
+        "userManagedDependencies": {
+          "type": "boolean",
+          "description": "True means that AzureML reuses an existing python environment; False means that AzureML will create a python environment based on the Conda dependencies specification.\n"
+        },
+        "condaDependencies": {
+          "description": "Conda dependencies for the run.\nRemarks: Specify conda dependencies in the json format here, or specify 'condaDependenciesFile' field and set its value to the conda file path, like '\\\"condaDependenciesFile\\\": \\\".azureml/conda_dependencies.yml\\\"'\n",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baseCondaEnvironment": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "not": {
+                    "required": [
+                      "userManagedDependencies"
+                    ],
+                    "properties": {
+                      "userManagedDependencies": {
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "not": {
+                    "properties": {
+                      "condaDependenciesFile": {
+                        "enum": [
+                          null
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "condaDependenciesFile"
+                  ]
+                }
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "not": {
+                    "required": [
+                      "userManagedDependencies"
+                    ],
+                    "properties": {
+                      "userManagedDependencies": {
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "not": {
+                    "properties": {
+                      "condaDependencies": {
+                        "enum": [
+                          null
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "condaDependencies"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "userManagedDependencies"
+                ],
+                "properties": {
+                  "userManagedDependencies": {
+                    "enum": [
+                      true
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "not": {
+                "properties": {
+                  "interpreterPath": {
+                    "enum": [
+                      null
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "interpreterPath"
+              ]
+            }
+          ]
+        }
+      ],
+      "defaultSnippets": [
+        {
+          "label": "Python section configuration template.",
+          "description": "Python section configuration template.",
+          "body": {
+            "interpreterPath": "python",
+            "userManagedDependencies": false,
+            "condaDependencies": {
+              "dependencies": [
+                "python=3.6.2",
+                {
+                  "pip": [
+                    "azureml-defaults"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "DockerSection": {
+      "type": "object",
+      "properties": {
+        "baseImage": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Base image used for Docker-based runs. If base image is not available in docker hub then please specify BaseImageRegistry field.\nExample: ubuntu:latest"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Set True to perform this run inside a Docker container.\nExample: True"
+        },
+        "sharedVolumes": {
+          "type": "boolean",
+          "description": "Set False if necessary to work around shared volume bugs on Windows.\nExample: True"
+        },
+        "preparation": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/Preparation"
+            }
+          ]
+        },
+        "gpuSupport": {
+          "type": "boolean",
+          "description": "Run with NVidia Docker extension to support GPUs.\nExample: False"
+        },
+        "shmSize": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The shared memory size setting for NVidia GPUs.\nRemarks: 1GB is NVidia's recommended default shm size. In testing, more was not needed.\nExample: 1g"
+        },
+        "arguments": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "Extra arguments to the Docker run command.\n",
+          "items": {
+            "type": "string"
+          }
+        },
+        "baseImageRegistry": {
+          "description": "Image registry that contains the base image.\n",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/ContainerRegistry"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "properties": {
+                "enabled": {
+                  "enum": [
+                    false
+                  ]
+                }
+              }
+            },
+            {
+              "not": {
+                "required": [
+                  "enabled"
+                ]
+              }
+            },
+            {
+              "properties": {
+                "baseImage": {
+                  "enum": [
+                    null
+                  ]
+                }
+              }
+            },
+            {
+              "not": {
+                "required": [
+                  "baseImage"
+                ]
+              }
+            },
+            {
+              "not": {
+                "properties": {
+                  "baseImageRegistry": {
+                    "enum": [
+                      null
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "baseImageRegistry"
+              ]
+            }
+          ]
+        }
+      ],
+      "defaultSnippets": [
+        {
+          "label": "Docker section configuration template.",
+          "description": "Docker section configuration template.",
+          "body": {
+            "baseImage": "mcr.microsoft.com/azureml/base:0.2.2",
+            "enabled": false,
+            "baseImageRegistry": {
+              "address": "",
+              "username": "",
+              "password": ""
+            }
+          }
+        }
+      ]
+    },
+    "Preparation": {
+      "type": "object",
+      "properties": {
+        "commandLine": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      }
+    },
+    "ContainerRegistry": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "DNS name or IP address of a container registry.\n"
+        },
+        "username": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The username for the container registry.\nRemarks: If username is specified then password is also required.\n"
+        },
+        "password": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "The password for the container registry.\n"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "properties": {
+                "username": {
+                  "enum": [
+                    null
+                  ]
+                }
+              }
+            },
+            {
+              "not": {
+                "required": [
+                  "username"
+                ]
+              }
+            },
+            {
+              "not": {
+                "properties": {
+                  "password": {
+                    "enum": [
+                      null
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "password"
+              ]
+            }
+          ]
+        }
+      ],
+      "defaultSnippets": [
+        {
+          "label": "Container registry configuration template.",
+          "description": "Container registry configuration template.",
+          "body": {
+            "address": "",
+            "username": "",
+            "password": ""
+          }
+        }
+      ]
+    },
+    "SparkSection": {
+      "type": "object",
+      "properties": {
+        "repositories": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The list of spark repositories.\n",
+          "items": {
+            "type": "string"
+          }
+        },
+        "packages": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The Spark packages to use.\n",
+          "items": {
+            "$ref": "#/definitions/SparkMavenPackage"
+          }
+        },
+        "precachePackages": {
+          "type": "boolean",
+          "description": "Whether to preckage the packages.\nExample: True"
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Spark section configuration template.",
+          "description": "Spark section configuration template.",
+          "body": {
+            "repositories": [
+              "https://mmlspark.azureedge.net/maven"
+            ],
+            "packages": "",
+            "precachePackages": true
+          }
+        }
+      ]
+    },
+    "SparkMavenPackage": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "artifact": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "version": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Spark maven package configuration template.",
+          "description": "Spark maven package configuration template.",
+          "body": {
+            "group": "com.microsoft.ml.spark",
+            "artifact": "mmlspark_2.11",
+            "version": "0.12"
+          }
+        }
+      ]
+    },
+    "HistoryConfiguration": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {},
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "properties": {
+        "outputCollection": {
+          "type": "boolean",
+          "description": "Enable history tracking -- this allows status, logs, metrics, and outputs to be collected for a run.\"\nExample: True"
+        },
+        "directoriesToWatch": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "The list of directories to monitor and upload files from.\nExample: [\"logs\", \"outputs\"]",
+          "default": [
+            "logs"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "History configuration template.",
+          "description": "History configuration template.",
+          "body": {
+            "outputCollection": true
+          }
+        }
+      ]
+    },
+    "SparkConfiguration": {
+      "type": "object",
+      "properties": {
+        "configuration": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "description": "The Spark configuration.\n",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Spark configuration template.",
+          "description": "Spark configuration template.",
+          "body": {
+            "configuration": {
+              "spark.app.name": "Azure ML Experiment",
+              "spark.yarn.maxAppAttempts": "1"
+            }
+          }
+        }
+      ]
+    },
+    "BatchAiConfiguration": {
+      "type": "object",
+      "properties": {
+        "nodeCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "AMLComputeConfiguration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Name of the cluster to be created. If not specified, runId will be used as cluster name.\nExample: my8nodeCluster"
+        },
+        "vmSize": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "VM size of the Cluster to be created. Allowed values are Azure vm sizes.\nThe list of vm sizes is available in https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-sizes-specs\nExample: Standard_D2_v2"
+        },
+        "vmPriority": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "VM priority of the Cluster to be created. Allowed values are dedicated and lowpriority.\nExample: dedicated"
+        },
+        "retainCluster": {
+          "type": "boolean",
+          "description": "Setting to true will prevent the cluster from being deleted upon completion of the run.\nExample: False"
+        },
+        "clusterMaxNodeCount": {
+          "type": "integer",
+          "description": "The maximum number of nodes that the cluster can scale up to.\nMinimum number of nodes will always be set to 0.\nExample: 10",
+          "format": "int32"
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "AmlCompute configuration template.",
+          "description": "AmlCompute configuration template.",
+          "body": {
+            "name": "",
+            "retainCluster": false,
+            "clusterMaxNodeCount": 1
+          }
+        }
+      ]
+    },
+    "TensorflowConfiguration": {
+      "type": "object",
+      "properties": {
+        "workerCount": {
+          "type": "integer",
+          "description": "The number of workers.\nExample: 2",
+          "format": "int32"
+        },
+        "parameterServerCount": {
+          "type": "integer",
+          "description": "Number of parameter servers.\nExample: 1",
+          "format": "int32"
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Tensorflow configuration template.",
+          "description": "Tensorflow configuration template.",
+          "body": {
+            "workerCount": 1,
+            "parameterServerCount": 1
+          }
+        }
+      ]
+    },
+    "MpiConfiguration": {
+      "type": "object",
+      "properties": {
+        "processCountPerNode": {
+          "type": "integer",
+          "description": "When using MPI, the number of processes per node.\nExample: 2",
+          "format": "int32"
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Mpi configuration template.",
+          "description": "Mpi configuration template.",
+          "body": {
+            "processCountPerNode": 1
+          }
+        }
+      ]
+    },
+    "HdiConfiguration": {
+      "type": "object",
+      "properties": {
+        "yarnDeployMode": {
+          "description": "Yarn deploy mode.\n",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/YarnDeployMode"
+            }
+          ]
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Hdi configuration template.",
+          "description": "Hdi configuration template.",
+          "body": {
+            "yarnDeployMode": ""
+          }
+        }
+      ]
+    },
+    "YarnDeployMode": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "None",
+        "Client",
+        "Cluster"
+      ],
+      "enum": [
+        "None",
+        "Client",
+        "Cluster"
+      ]
+    },
+    "ContainerInstanceConfiguration": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "description": "Defaults to the region of the workspace.\nExample: eastus2"
+        },
+        "cpuCores": {
+          "type": "number",
+          "description": "Default size corresponds to the largest container supported in all regions.\nDetails: https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quotas\nExample: 2",
+          "format": "double"
+        },
+        "memoryGb": {
+          "type": "number",
+          "description": "The memory available for the container instance.\nExample: 3.5",
+          "format": "double"
+        }
+      },
+      "defaultSnippets": [
+        {
+          "label": "Container instance configuration template.",
+          "description": "Container instance configuration template.",
+          "body": {}
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "anyOf": [
+        {
+          "not": {
+            "required": [
+              "communicator"
+            ],
+            "properties": {
+              "communicator": {
+                "enum": [
+                  "Mpi"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "mpi": {
+                "enum": [
+                  null
+                ]
+              }
+            }
+          },
+          "required": [
+            "mpi"
+          ]
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "not": {
+            "required": [
+              "framework"
+            ],
+            "properties": {
+              "framework": {
+                "enum": [
+                  "PySpark"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "spark": {
+                "enum": [
+                  null
+                ]
+              }
+            }
+          },
+          "required": [
+            "spark"
+          ]
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "not": {
+            "required": [
+              "target"
+            ],
+            "properties": {
+              "target": {
+                "enum": [
+                  "amlcompute"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "amlCompute": {
+                "enum": [
+                  null
+                ]
+              }
+            }
+          },
+          "required": [
+            "amlCompute"
+          ]
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "not": {
+            "required": [
+              "framework"
+            ],
+            "properties": {
+              "framework": {
+                "enum": [
+                  "TensorFlow"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "tensorflow": {
+                "enum": [
+                  null
+                ]
+              }
+            }
+          },
+          "required": [
+            "tensorflow"
+          ]
+        }
+      ]
+    },
+    {
+      "anyOf": [
+        {
+          "not": {
+            "required": [
+              "target"
+            ],
+            "properties": {
+              "target": {
+                "enum": [
+                  "containerinstance"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "containerInstance": {
+                "enum": [
+                  null
+                ]
+              }
+            }
+          },
+          "required": [
+            "containerInstance"
+          ]
+        }
+      ]
+    }
+  ],
+  "defaultSnippets": [
+    {
+      "label": "RunConfiguration default template.",
+      "description": "RunConfiguration default template.",
+      "body": {
+        "script": "train.py",
+        "arguments": [],
+        "framework": "",
+        "communicator": "None",
+        "target": "local",
+        "environment": {
+          "python": {
+            "interpreterPath": "python",
+            "userManagedDependencies": false,
+            "condaDependencies": {
+              "dependencies": [
+                "python=3.6.2",
+                {
+                  "pip": [
+                    "azureml-defaults"
+                  ]
+                }
+              ]
+            }
+          },
+          "docker": {
+            "baseImage": "mcr.microsoft.com/azureml/base:0.2.2",
+            "enabled": false,
+            "baseImageRegistry": {
+              "address": "",
+              "username": "",
+              "password": ""
+            }
+          }
+        }
+      }
+    }
+  ]
+}
