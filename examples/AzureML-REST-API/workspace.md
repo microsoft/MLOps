@@ -64,51 +64,6 @@ token = resp["accessToken"]
 ```
 
 ## Create AML Workspace 
-
-
-### option 1: using REST API
-- Need "token" from Authenticate against Azure
-- You have created Azure Application Insights
-- You have created Azure KeyVault
-- You have created Azure Storage Account
-- You have created Azure Container Registry
-
-```python
-container_registry_name = "<your azure container register>"
-keyvault_name = "<your azure keyvault>"
-application_insights_name = "<your application insight>"
-storage_account_name = "<your storage account>"
-location_of_workspace = "<region of workspace>"
-
-container_registry_id = "/subscriptions/{}/resourceGroups/{}/providers/Microsoft.ContainerRegistry/registries/{}".format(subid, rg, container_registry_name)
-keyvault_id = "/subscriptions/{}/resourceGroups/{}/providers/Microsoft.KeyVault/vaults/{}".format(subid, rg, keyvault_name)
-application_insights_id = "/subscriptions/{}/resourceGroups/{}/providers/microsoft.insights/components/{}".format(subid, rg, application_insights_name)
-storage_account_id = "/subscriptions/{}/resourceGroups/{}/providers/Microsoft.Storage/storageAccounts/{}".format(subid, rg, storage_account_name)
-
-body = {
-         'location': location_of_workspace,
-         "properties": {
-            "friendlyName": freind_name,
-            "description": description,
-            "containerRegistry": container_registry_id,
-            "keyVault": keyvault_id,
-            "applicationInsights": application_insights_id,
-            "storageAccount": storage_account_id,
-         },
-         "identity": {
-             "type": "systemAssigned"
-         },
-       }
-
-header = {'Authorization': 'Bearer ' + token, "Content-type": "application/json"}
-create_workerspace_url = "https://management.azure.com/subscriptions/{}/resourceGroups/{}/providers/Microsoft.MachineLearningServices/workspaces/{}?api-version={}".format(subid, rg, ws, api_verison)
-resp = requests.put(create_workerspace_url, headers=header, json=body)
-
-print(resp.text)
-
-```
-
-### option 2: azure portal
 It is the easiest way to create aml workspace through azure portal. Here is the [official guide](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-manage-workspace).
 
 ## Get/Delete/List AML Workspace
