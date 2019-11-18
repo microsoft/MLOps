@@ -13,7 +13,8 @@ For additional MLOps examples check out aka.ms/mlops
 Before you begin, make sure you have the following:
 * [Azure Machine Learning workspace](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-manage-workspace)
 * [Azure DevOps account](https://azure.microsoft.com/en-us/services/devops/)
-* Completed the train-with-pytorch notebook in this repository to create a model.
+* Completed the train-with-pytorch notebook in this repository to create a model 
+* Clone this repo in your Azure DevOps project 
 
 ## Set up a Release Deployment Pipeline to Deploy the Model
 
@@ -43,12 +44,12 @@ clicking on the cog wheel to the bottom left of the screen), and then click on
 **Note:** Creating service connection using Azure Machine Learning extension
 requires 'Owner' or 'User Access Administrator' permissions on the Workspace.
 
-![create-service-con](./images/create-service-con.PNG)
+![create-service-con](./images/create-service-con.png)
 
 Add a model artifact to the pipeline and select **AzureML Model Artifact** source
 type. Select the **Project** and **Source (repository)** to ensure your pipeline has access to the configuration files for deployment.
 
-![select model artifact](./images/select-model-artifact.png)
+![select model artifact](./images/select-model-artifact.PNG)
 
 Add an Azure repo artifact to the pipeline and select **Azure repo** source
 type. Select the **Service Endpoint** and **Model Names** from the drop down
@@ -71,7 +72,7 @@ In a similar way, create a stage **Prod (AKS)** and add a single task to the job
 **Azure ML Model Deploy**. Make sure that the Agent Specification is
 ubuntu-16.04 under the Agent Job. Specify task parameters as it is shown in the image below:
 
-![deploy aks](./images/deploy-to-aks.png)
+![deploy aks](./images/deploy-to-aks.PNG)
 
 
 **Note:** Creating of a Kubernetes cluster on AKS is out of scope of this
@@ -83,12 +84,12 @@ created, in order to trigger a coutinuous integration, click on the lightning
 bolt icon, make sure the **Continuous deployment trigger** is checked and
 save the trigger:
 
-![Automate Deploy Model Pipeline](./images/enable-trigger.png)
+![Automate Deploy Model Pipeline](./images/enable-trigger.PNG)
 
 Congratulations! You have set up a release pipeline that deploys a model to QA (ACI) and Prod (AKS)
 environments.
 
 In order to trigger the deployment, run through the training process again or you can create a manual release as shown below. 
 
-![create a release](./images/create-release.png)
+![create a release](./images/create-release.PNG)
 
