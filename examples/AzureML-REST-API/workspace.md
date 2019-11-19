@@ -71,7 +71,7 @@ token = resp["accessToken"]
 - You have created Azure Application Insights
 - You have created Azure KeyVault
 - You have created Azure Storage Account
-- You have created Azure Container Registry
+- You have created Azure Container Registry and [enable admin user](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication#admin-account).
 
 ```python
 container_registry_name = "<your azure container register>"
@@ -103,8 +103,20 @@ body = {
 header = {'Authorization': 'Bearer ' + token, "Content-type": "application/json"}
 create_workerspace_url = "https://management.azure.com/subscriptions/{}/resourceGroups/{}/providers/Microsoft.MachineLearningServices/workspaces/{}?api-version={}".format(subid, rg, ws, api_verison)
 resp = requests.put(create_workerspace_url, headers=header, json=body)
+print(resp.__dict__)
+```
 
-print(resp.text)
+
+#### Monitor status of run
+You can track the status of create workspace progress
+
+``` python
+poll_status_url = resp.headers["Location"]
+
+while True:
+    time.sleep(5)
+    status = requests.get(poll_status_url, headers=header)
+    print(status.content)
 
 ```
 

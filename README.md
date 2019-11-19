@@ -73,6 +73,7 @@ All of our examples will be built in the open and we welcome contributions from 
 - https://github.com/microsoft/AIArchitecturesAndPractices
 - https://github.com/danielsc/azureml-debug-training/blob/master/Setting%20up%20VSCode%20Remote%20on%20an%20AzureML%20Notebook%20VM.md - code from a notebook VM in VSCode
 - https://github.com/jomit/SecureAzureMLWorkshop (code + scripts to run workshop around building secure ml platform on azure)
+- https://github.com/Azure/ml-functions-package-demo package an ML model for use in Azure Functions
 
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
