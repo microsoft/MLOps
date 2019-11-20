@@ -1,0 +1,21 @@
+{
+  "datasetType": "File",
+  "parameters": {
+    "path": [
+      "http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz",
+      "http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz",
+      "http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz",
+      "http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz"
+    ]
+  },
+  "registration": {
+    "createNewVersion": true,
+    "description": "mnist dataset",
+    "name": "mnist-dataset",
+    "tags": {
+      "sample-tag": "mnist"
+    }
+  },
+  "schemaVersion": 1
+}
+
