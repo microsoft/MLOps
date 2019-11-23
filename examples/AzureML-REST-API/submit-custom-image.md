@@ -78,12 +78,49 @@ resp = requests.post(start_run, files=run_files, headers=header)
 print("response text: ", json.loads(resp.text))
 ```
 
+## Tag the run
+
+Tagging runs lets you later retrieve runs by more meaningful identifiers than the run ID.
+
+```python
+run_id = resp.json()["runId"]
+
+run_uri = hosturl + historybase + resourcebase + "experiments/{}/runs/{}".format(experiment_name,run_id)
+payload = {
+   "tags": {
+      "customimage": "specialrun"
+   }
+}
+
+# If you forget the content type header, you'll get an HTTP 415
+header.update({
+    "content-type": "application/json"
+})
+resp = requests.patch(run_uri, json=payload, headers=header)
+print(resp.json()["tags"])
+```
+
+## Retrieve a run by tag
+
+Later, you can fetch the run by querying the experiment
+
+```python
+query_runs = hosturl + historybase + resourcebase + "experiments/{}/runs:query".format(experiment_name)
+payload = {
+   "filter": "Tags/customimage eq specialrun",
+    "top": 1
+}
+
+resp = requests.post(query_runs, json=payload, headers=header)
+print(resp.json()["value"][0])
+```
+
 ## Monitor status of run
 
 You can track the status of the run by polling the run history service.
 
 ```python
-run_id = json.loads(resp.text)["runId"]
+run_id = resp.json()["value"][0]["runId"]
 
 get_run = hosturl + historybase + resourcebase + "experiments/{}/runs/{}".format(experiment_name,run_id)
 
@@ -94,4 +131,27 @@ while status not in ["Completed", "Failed", "Cancelled"]:
     resp = requests.get(get_run, headers=header)
     status = json.loads(resp.text)["status"]
     print(status)
+```
+
+## Get the full details for the run
+
+Finally, you can fetch all of the details for a given run, including log files and the run definition. Note: do not poll on this slower endpoint.
+
+```python
+get_rundetails = hosturl + historybase + resourcebase + "experiments/{}/runs/{}/details".format(experiment_name, run_id)
+
+resp = requests.get(get_rundetails, headers=header)
+print(resp.json())
+```
+
+## Optional: Delete tags
+
+As Tags are mutable as opposed to Properties, you might want to delete a tag on a run
+
+```python
+delete_runtags = hosturl + historybase + resourcebase + "experiments/{}/runs/{}/tags".format(experiment_name, run_id)
+payload = ["customimage"]
+
+resp = requests.delete(delete_runtags, json=payload, headers=header)
+print(resp.json())
 ```
