@@ -12,5 +12,3 @@ The files in this directory demonstrate the following operations using the ML CL
 * Testing the web service by scoring example data
 
 These actions are performed by the `train-model.sh` file in this directory.
-
-For more information on how this example works, see the [Train and deploy a model from the CLI](https://docs.microsoft.com/azure/machine-learning/service/tutorial-train-deploy-model-cli) article.
