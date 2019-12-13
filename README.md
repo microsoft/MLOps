@@ -19,6 +19,9 @@ description: "MLOps end to end examples & solutions. A collection of examples sh
 MLOps empowers data scientists and app developers to help bring ML models to production. 
 MLOps enables you to track / version / audit / certify / re-use every asset in your ML lifecycle and provides orchestration services to streamline managing this lifecycle.
 
+### MLOps podcast
+Check out the recent TwiML podcast on MLOps [here](https://twimlai.com/twiml-talk-321-enterprise-readiness-mlops-and-lifecycle-management-with-jordan-edwards/) 
+
 ## How does Azure ML help with MLOps?
 Azure ML contains a number of asset management and orchestration services to help you manage the lifecycle of your model training & deployment workflows.
 
