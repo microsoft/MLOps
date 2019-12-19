@@ -31,6 +31,7 @@ With Azure ML + Azure DevOps you can effectively and cohesively manage your data
 ## New MLOps features
 - [Azure DevOps Machine Learning extension](https://marketplace.visualstudio.com/items?itemName=ms-air-aiagility.vss-services-azureml) 
 - [Azure ML CLI](https://aka.ms/azmlcli)
+- [Create event driven workflows](https://docs.microsoft.com/azure/machine-learning/service/how-to-use-event-grid) using Azure Machine Learning and Azure Event Grid for scenarios such as triggering retraining pipelines
 - [Set up model training & deployment with Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops)
 
 > If you are using the Machine Learning DevOps extension, you can access model name and version info using these variables:
