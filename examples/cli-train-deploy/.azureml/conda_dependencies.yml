@@ -12,6 +12,7 @@ dependencies:
 
 - pip:
   - scikit-learn
+  - joblib
   - azureml-sdk
   - azureml-dataprep[pandas,fuse]
 channels:
