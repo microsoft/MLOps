@@ -12,7 +12,6 @@ description: "MLOps end to end examples & solutions. A collection of examples sh
 # MLOps on Azure
 - [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
 - [Example MLOps Release Pipeline](https://dev.azure.com/customai/DevopsForAI-AML/_release?view=all&_a=releases&definitionId=16)
-- [MLOps Architecture Deep Dive-  YouTube](https://www.youtube.com/watch?v=nst3UAGpiBA)
 - [Official Python Azure MLOps repo](https://github.com/Microsoft/MLOpsPython)
 
 ## What is MLOps?
@@ -50,7 +49,7 @@ An example repo which exercises our recommended flow can be found [here](https:/
 - For new code: Every time new code is committed to the repo, run unit tests, data quality checks, train model.
 
 We recommend the following steps in your CI process:
-- **Train Model** - run training code / algo & output a [model](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model) file which is stored in the [run history](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#run).
+- **Train Model** - run training code / algo & output a [model](https://docs.microsoft.com/en-us/azure/machine-learning/concept-azure-machine-learning-architecture#model) file which is stored in the [run history](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#run).
 - **Evaluate Model** - compare the performance of newly trained model with the model in production. If the new model performs better than the production model, the following steps are executed. If not, they will be skipped.
 - **Register Model** - take the best model and register it with the [Azure ML Model registry](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model-registry). This allows us to version control it.
 
