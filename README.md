@@ -13,6 +13,7 @@ description: "MLOps end to end examples & solutions. A collection of examples sh
 - [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
 - [Example MLOps Release Pipeline](https://dev.azure.com/customai/DevopsForAI-AML/_release?view=all&_a=releases&definitionId=16)
 - [Official Python Azure MLOps repo](https://github.com/Microsoft/MLOpsPython)
+- [MLOps Architecture Deep Dive video](https://www.youtube.com/watch?v=nst3UAGpiBA)
 
 ## What is MLOps?
 MLOps empowers data scientists and app developers to help bring ML models to production. 
