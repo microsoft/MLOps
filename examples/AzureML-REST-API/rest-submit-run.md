@@ -11,7 +11,7 @@ This example shows you how to submit a simple remote run using REST API
 
 ## Obtain client ID and secret
 
-To authenticate against the REST API, you must create a service principal and get the client ID and client secret. To learn how to get the client ID and client secret, use the information in the [Set up authentication for Azure Machine Learning resources and workflows](https://docs.microsoft.com/azure/machine-learning/how-to-setup-authentication) article.
+To authenticate against Azure from REST client, you need to perform App Registration that creates a service principal that can access your workspace with client ID and client secret. To learn how to get the client ID and client secret, use the information in the [Set up authentication for Azure Machine Learning resources and workflows](https://docs.microsoft.com/azure/machine-learning/how-to-setup-authentication) article.
 
 ## Authenticate against Azure
 
