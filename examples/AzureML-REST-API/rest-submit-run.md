@@ -9,9 +9,36 @@ This example shows you how to submit a simple remote run using REST API
  * The workspace has Machine Learning Compute resource for the remote run.
  * You have local Python 3 with [requests](https://pypi.org/project/requests/) and [adal](https://pypi.org/project/adal/) packages installed.
 
+## Obtain client ID and secret
+
+To authenticate against the REST API, you must create a service principal and get the client ID and client secret. To learn how to get the client ID and client secret, use the information in the [Set up authentication for Azure Machine Learning resources and workflows](https://docs.microsoft.com/azure/machine-learning/how-to-setup-authentication) article.
+
 ## Authenticate against Azure
 
-To perform REST call against Azure Machine Learning services, you need to obtain authentication token from Azure management service. To learn how to get an authentication token, use the information in the [Set up authentication for Azure Machine Learning resources and workflows](https://docs.microsoft.com/azure/machine-learning/how-to-setup-authentication) article.
+To perform REST call against Azure Machine Learning services, you need to obtain authentication token from Azure management service. Fill the client id, secret, workspace information and your login name in the code below.
+
+```python
+import requests
+import json
+import time
+from adal import AuthenticationContext
+
+client_id = "<my-client-id>"
+client_secret = "<my-clent-secret>"
+
+region = "<my-workspace-region>"
+subid = "<my-subscription-id>"
+ws = "<my-workspace-name>"
+rg = "<my-workspace-resource-group>"
+
+hosturl = "https://{}.api.azureml.ms/".format(region)
+
+auth_context = AuthenticationContext("https://login.microsoftonline.com/<my-user-name>.onmicrosoft.com")
+
+resp = auth_context.acquire_token_with_client_credentials("https://management.azure.com/",client_id,client_secret)
+
+token = resp["accessToken"]
+```
 
 ## Create or get an experiment
 
