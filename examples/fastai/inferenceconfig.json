@@ -1,0 +1,42 @@
+{
+    "entryScript": "score.py",
+    "environment":
+    {
+      "docker": {
+          "arguments": [],
+          "baseDockerfile": null,
+          "baseImage": "mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04",
+        },
+        "environmentVariables": {
+          "EXAMPLE_ENV_VAR": "EXAMPLE_VALUE"
+        },
+        "inferencingStackVersion": null,
+        "name": "inline-deploy-env",
+        "python": {
+          "baseCondaEnvironment": null,
+          "condaDependencies": {
+            "channels": [
+              "conda-forge"
+            ],
+            "dependencies": [
+              "python=3.6.2",
+              {
+                "pip": [
+                  "azureml-core",
+                  "azureml-defaults",
+                  "azureml-telemetry",
+                  "torch",
+                  "torchvision",
+                  "fastai"
+                ]
+              }
+            ],
+            "name": "fastai_pets"
+          },
+          "interpreterPath": "python",
+          "userManagedDependencies": false
+        },
+        "version": "1"
+    },
+    "dependencies": null
+}
