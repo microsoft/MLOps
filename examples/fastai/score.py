@@ -16,7 +16,7 @@ def init():
     # It is the path to the model folder (./azureml-models/$MODEL_NAME/$VERSION) for single model deployment
     # For multiple models, it points to the folder containing all deployed models (./azureml-models)
     path=os.getenv('AZUREML_MODEL_DIR')
-    filename="lesson1-pets-resnet34-23Jan20.pkl"
+    filename="fastaimodel.pkl"
     pets_model = load_learner(path=path, file=filename)
 
     print(pets_model.data.classes)
