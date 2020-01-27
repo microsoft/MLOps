@@ -3,8 +3,7 @@ from fastai.vision import *
 from fastai.metrics import error_rate
 import urllib.request
 
-global img_url
-img_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlaJelWZrzIO3CNNkhdTOGfkD396zo1xaR5DrIZaO7FiBPCdWHKg&s"
+global pets_model
 
 def download_jpg(url):
     file_path = "./candidate.jpg"
@@ -13,9 +12,8 @@ def download_jpg(url):
     return file_path
 
 def init():
-    global pets_model
     # AZUREML_MODEL_DIR is an environment variable created during deployment.
-    # It is the path to the model folder (./azureml-models/$MODEL_NAME/$VERSION)
+    # It is the path to the model folder (./azureml-models/$MODEL_NAME/$VERSION) for single model deployment
     # For multiple models, it points to the folder containing all deployed models (./azureml-models)
     path=os.getenv('AZUREML_MODEL_DIR')
     filename="lesson1-pets-resnet34-23Jan20.pkl"
@@ -25,19 +23,13 @@ def init():
 
 def run(request):
     try:
-        print("start")
-        candidate_url = request.args.get("url", img_url)
-        
+        candidate_url = request["url"]
         file_path = download_jpg(candidate_url)
-        print(file_path)
-
         img = open_image(file_path)
-        print(img)
-        
         prediction = pets_model.predict(img)
-        
         print(prediction)
         return str(prediction[0])
+    
     except Exception as e:
         result = str(e)
         print(result)
@@ -45,5 +37,6 @@ def run(request):
 
 if __name__ == "__main__":
     init()
-    run([])
+    request= { "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlaJelWZrzIO3CNNkhdTOGfkD396zo1xaR5DrIZaO7FiBPCdWHKg&s"}
+    run(request)
     print("main")
