@@ -97,6 +97,47 @@ During the continuous integration an artifact is created that will leater be rel
 ![ML lifecycle](./images/DevOps_AI_steps.png)
 ![ML lifecycle](./images/DevOps_AI_steps_2.png)
 
+### Azure Machine Learning Pipeline
+
+#### Train step
+
+1. model.zip -> Zip with saved_model.pb with variables files
+2. log.zip -> Zip with tf runs logs. Download it and view in your local with Tensorboard the progress of your training
+
+- `tensorboard --logdir=data/log`
+
+- Go to `http://localhost:6006/`
+
+![tensorboard](./images/tensorboard.PNG)
+
+3. checkpoints -> Zip with weights of the Tensorflow model
+
+![train step](./images/pipeline_train_1.PNG)
+
+#### Evaluate step
+
+1. grtruth.zip -> Zip with ground truth detections
+2. predicted.zip -> Zip with predicted detections
+3. model.zip -> Zip with saved_model.pb with variables files
+
+![evaluate step](./images/pipeline_evaluate.PNG)
+
+#### Report step
+
+1. saved_model.pb -> Tensorflow model 
+2. report.zip -> Zip with metrics results and plots
+
+![report step](./images/pipeline_report.PNG)
+
+#### Final report of AML Pipeline
+
+![ground-truth](./images/Ground-Truth Info.png)
+![helmet](./images/helmet.png)mAP.png
+![none](./images/none.png)
+![mAP](./images/mAP.png)
+![predictions](./images/Predicted-Objects-Info.png)
+
+
 ### References
 
 - [Azure Machine Learning(Azure ML) Service Workspace](https://docs.microsoft.com/en-us/azure/machine-learning/service/overview-what-is-azure-ml)
