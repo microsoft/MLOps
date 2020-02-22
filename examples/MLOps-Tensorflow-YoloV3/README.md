@@ -9,14 +9,7 @@ products:
 description: ""
 ---
 
-# MLOps using Azure ML Services, Azure DevOps and IoT Modules - Helmet Detection with YoloV3 
-## Introduction
-The objective is to develop two proofs of concept that allow the use of Artificial Intelligence for the detection of PPE and number of workers in a given area to be validated both at a technical and business level. 
-
-### People detection
-The objetive of this scenario is to detect and count the number of people in a given area. It is an essential and significant task in any intelligent video surveillance system.
-
-A README with more information on how this model will work and the investigation done for this module is being created.
+# MLOps using Azure ML Services, Azure DevOps and IoT Modules - Helmet Detection with YoloV3
 
 ### PPE detection
 The objetive of this scenario is to detect personal protective equipment (PPE), such as helmets and caps. Thanks to this, accidents can be avoided and it can be checked if the security measures are met sending an alert in case it is not.
