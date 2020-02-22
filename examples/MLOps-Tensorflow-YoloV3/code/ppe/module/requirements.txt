@@ -1,7 +1,0 @@
-numpy==1.17.4
-tensorflow-gpu==2.0
-opencv-python==4.1.2.30
-easydict==1.9
-azure-iothub-device-client==1.4.6
-imutils==0.5.3
-pyyml

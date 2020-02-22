@@ -9,7 +9,7 @@ products:
 description: ""
 ---
 
-# MLOps using Azure ML Services, Azure DevOps and IoT Modules - Helmet Detection with YoloV3
+# MLOps using Azure ML Services, Azure DevOps - Helmet Detection with YoloV3
 
 ### PPE detection
 The objetive of this scenario is to detect personal protective equipment (PPE), such as helmets and caps. Thanks to this, accidents can be avoided and it can be checked if the security measures are met sending an alert in case it is not.
