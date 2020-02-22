@@ -1,0 +1,18 @@
+name: ppe
+channels:
+  - defaults
+dependencies:
+  - python==3.6
+  - pip==19.1.1
+  - numpy==1.18.1
+  - pandas
+  - tensorflow-gpu==2.0.0
+  - pip:
+    - azure
+    - azureml-core==1.0.60
+    - azureml-tensorboard
+    - azure-storage==0.36.0
+    - tqdm==4.41.1
+    - opencv-python==4.1.2.30
+    - easydict==1.9
+    - matplotlib==3.1.3

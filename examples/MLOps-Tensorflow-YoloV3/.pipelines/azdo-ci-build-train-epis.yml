@@ -1,0 +1,144 @@
+trigger:
+  branches:
+    include:
+    - develop
+
+variables:
+  - group: MLOps-Library
+  - name: upload-datastore-script
+    value: 'datastore.py'
+  - name: generate-voc-script
+    value: 'generate_voc_dataset.py'
+  - name: build-train-script
+    value: 'build_train_pipeline.py'
+  - name: run-train-script
+    value: 'run_train_pipeline.py'
+
+stages:
+- stage: 'CHECK_CODE_QUALITY'
+  displayName: 'Check Code Quality'
+  jobs:
+  - job: "Check_Code_Quality_Pipeline"
+    displayName: "Check Code Quality Pipeline"
+    pool: 
+      vmImage: 'ubuntu-latest'
+    timeoutInMinutes: 0
+    steps:
+      - task: SonarCloudPrepare@1
+        inputs:
+          SonarCloud: $(SONAR_CLOUD_PROJECT_NAME)
+          organization: "plainconcepts"
+          scannerMode: "CLI"
+          configMode: "manual"
+          cliProjectKey: $(SONAR_CLOUD_PROJECT_KEY)
+          cliProjectName: $(SONAR_CLOUD_PROJECT_NAME)
+          cliProjectVersion: "1.$(Build.BuildId)"
+          cliSources: "code/"
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: "3.6"
+          addToPath: true
+          architecture: "x64"
+      - task: CmdLine@2
+        displayName: Compile all
+        inputs:
+          script: 'python -m compileall code\'
+      - task: SonarCloudAnalyze@1
+        displayName: "Run SonarCloud analysis"
+      - task: SonarCloudPublish@1
+        displayName: "Publish SonarCloud results"
+        inputs:
+          pollingTimeoutSec: "300"
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'acr'
+          repository: 'iot/ppemodule'
+          command: 'buildAndPush'
+          Dockerfile: '**/Dockerfile'
+      - task: JSONTokenizer@1
+        inputs:
+          sourcePath: 'code/ppe/module'
+          filePattern: 'manifest.json'
+          tokenizeType: 'json'
+          includes: 'modulesContent.$edgeAgent.properties.desired.runtime.settings.registryCredentials.acrmodules.password,modulesContent.$edgeAgent.properties.desired.runtime.settings.registryCredentials.acrmodules.username,modulesContent.$edgeAgent.properties.desired.modules.ppemodule.settings.image'
+          excludes: 
+- stage: 'GENERATE_DATASTORE'
+  displayName: 'Generate Datastore'
+  jobs:
+  - job: "Generate_Datastore_Pipeline"
+    condition: and(succeeded(), eq(coalesce('$(AUTO-TRIGGER-DATASTORE)', 'true'), 'true'))
+    displayName: "Generate Datastore Pipeline"
+    pool: 
+      vmImage: 'ubuntu-latest'
+    container: mcr.microsoft.com/mlops/python:latest
+    timeoutInMinutes: 0
+    steps:
+    - script: |
+        python3 $(Build.SourcesDirectory)/code/ppe/experiment/ml_service/util/$(upload-datastore-script)
+      failOnStderr: 'false'
+      env:
+        SP_APP_SECRET: '$(SP_APP_SECRET)'
+        UPDATE_DATA: '$(UPDATE_DATA)'
+      displayName: 'Upload EPIS datastore'
+- stage: 'CREATE_VOC_ANNOTATION'
+  displayName: 'Create Voc Annotation'
+  jobs:
+  - job: "Create_Voc_Annotation_Pipeline"
+    condition: and(succeeded(), eq(coalesce('$(AUTO-TRIGGER-VOC-ANNOTATIONS)', 'true'), 'true'))
+    displayName: "Create Voc Annotation Pipeline"
+    pool: 
+      vmImage: 'ubuntu-latest'
+    container: mcr.microsoft.com/mlops/python:latest
+    timeoutInMinutes: 0
+    steps:
+    - script: |
+        python3 $(Build.SourcesDirectory)/code/ppe/experiment/code/$(generate-voc-script)
+      failOnStderr: 'false'
+      env:
+        SP_APP_SECRET: '$(SP_APP_SECRET)'
+      displayName: 'Create Voc Annotation'
+- stage: 'BUILD_TRAIN_AML_PIPELINE'
+  displayName: 'Build Train AML pipeline'
+  jobs:
+  - job: "Build_Train_AML_Pipeline"
+    displayName: "Build Train AML Pipeline"
+    pool: 
+      vmImage: 'ubuntu-latest'
+    container: mcr.microsoft.com/mlops/python:latest
+    timeoutInMinutes: 0
+    steps:
+    - script: |
+        python3 $(Build.SourcesDirectory)/code/ppe/experiment/ml_service/pipelines/$(build-train-script)
+      failOnStderr: 'false'
+      env:
+        SP_APP_SECRET: '$(SP_APP_SECRET)'
+      displayName: 'Publish Azure Machine Learning Pipeline'
+- stage: 'Trigger_AML_Pipeline'
+  displayName: 'Train, evaluate, register model via previously published AML pipeline'
+  jobs:
+  - job: "Invoke_Model_Pipeline"
+    displayName: "Invoke Model Pipeline and evaluate results to register"
+    pool: 
+      vmImage: 'ubuntu-latest'
+    container: mcr.microsoft.com/mlops/python:latest
+    timeoutInMinutes: 0
+    steps:
+    - script: |
+        python3 $(Build.SourcesDirectory)/code/ppe/experiment/ml_service/pipelines/$(run-train-script)
+      displayName: 'Trigger Training Pipeline'
+      env:
+        SP_APP_SECRET: '$(SP_APP_SECRET)'
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        Contents: |
+          code/ppe/module/**
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        ArtifactName: 'ppe-artifact'
+        publishLocation: 'container'
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        TargetPath: '$(Build.ArtifactStagingDirectory)'

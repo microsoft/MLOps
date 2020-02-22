@@ -1,0 +1,34 @@
+trigger:
+  branches:
+    include:
+    - develop
+  paths:
+    include:
+    - environment_setup/arm-templates/*
+pr:
+  branches:
+    include:
+    - develop
+  paths:
+    include:
+    - environment_setup/arm-templates/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- group: Gonvarri-MLOps
+
+
+steps:
+- task: AzureResourceGroupDeployment@2
+  inputs:
+    azureSubscription: 'Microsoft Azure Enterprise ( af715f8d-1b98-4a0b-ab63-b48c44c9b993 )'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '$(RESOURCE_GROUP_NAME)'
+    location: $(LOCATION)
+    templateLocation: 'Linked artifact'
+    csmFile: '$(Build.SourcesDirectory)/environment_setup/arm-templates/cloud-environment.json'
+    overrideParameters: '-baseName $(BASE_NAME) -location $(LOCATION)'
+    deploymentMode: 'Incremental'
+  displayName: 'Deploy services resources to Azure'

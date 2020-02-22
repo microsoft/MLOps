@@ -1,0 +1,192 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "defaultValue": "gonvarri",
+      "metadata": {
+        "description": "The base name to use as prefix to create all the resources."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "westeurope",
+      "metadata": {
+        "description": "Specifies the location for all resources."
+      }
+    }
+  },
+  "variables": {
+    "amlWorkspaceName": "[concat(parameters('baseName'),'-aml')]",
+    "storageAccountName": "[concat(toLower(parameters('baseName')), 'st')]",
+    "storageAccountType": "Standard_LRS",
+    "keyVaultName": "[concat(parameters('baseName'),'-kv')]",
+    "tenantId": "[subscription().tenantId]",
+    "applicationInsightsName": "[concat(parameters('baseName'),'-ai')]",
+    "containerRegistryName": "[concat(toLower(parameters('baseName')),'acr')]",
+    "iotHubName": "[concat('aih-', toLower(parameters('baseName')))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Devices/IotHubs",
+      "apiVersion": "2019-11-04",
+      "name": "[variables('iotHubName')]",
+      "location": "westeurope",
+      "sku": {
+          "name": "S1",
+          "tier": "Standard",
+          "capacity": 1
+      },
+      "properties": {
+          "ipFilterRules": [],
+          "eventHubEndpoints": {
+              "events": {
+                  "retentionTimeInDays": 1,
+                  "partitionCount": 4
+              }
+          },
+          "routing": {
+              "endpoints": {
+                  "serviceBusQueues": [],
+                  "serviceBusTopics": [],
+                  "eventHubs": [],
+                  "storageContainers": []
+              },
+              "routes": [],
+              "fallbackRoute": {
+                  "name": "$fallback",
+                  "source": "DeviceMessages",
+                  "condition": "true",
+                  "endpointNames": [
+                      "events"
+                  ],
+                  "isEnabled": true
+              }
+          },
+          "messagingEndpoints": {
+              "fileNotifications": {
+                  "lockDurationAsIso8601": "PT1M",
+                  "ttlAsIso8601": "PT1H",
+                  "maxDeliveryCount": 10
+              }
+          },
+          "enableFileUploadNotifications": false,
+          "cloudToDevice": {
+              "maxDeliveryCount": 10,
+              "defaultTtlAsIso8601": "PT1H",
+              "feedback": {
+                  "lockDurationAsIso8601": "PT1M",
+                  "ttlAsIso8601": "PT1H",
+                  "maxDeliveryCount": 10
+              }
+          },
+          "features": "None"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2018-07-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[variables('storageAccountType')]"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "encryption": {
+          "services": {
+            "blob": {
+              "enabled": true
+            },
+            "file": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "supportsHttpsTrafficOnly": true
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2018-02-14",
+      "name": "[variables('keyVaultName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "tenantId": "[variables('tenantId')]",
+        "sku": {
+          "name": "standard",
+          "family": "A"
+        },
+        "accessPolicies": []
+      }
+    },
+    {
+      "type": "Microsoft.Insights/components",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('applicationInsightsName')]",
+      "location": "[if(or(equals(parameters('location'),'westeurope'),equals(parameters('location'),'westeurope')),'westeurope',parameters('location'))]",
+      "kind": "web",
+      "properties": {
+        "Application_Type": "web"
+      }
+    },
+    {
+      "type": "Microsoft.ContainerRegistry/registries",
+      "apiVersion": "2017-10-01",
+      "name": "[variables('containerRegistryName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {
+        "adminUserEnabled": true
+      }
+    },
+    {
+      "type": "Microsoft.MachineLearningServices/workspaces",
+      "apiVersion": "2018-11-19",
+      "name": "[variables('amlWorkspaceName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
+        "[resourceId('Microsoft.Insights/components', variables('applicationInsightsName'))]",
+        "[resourceId('Microsoft.ContainerRegistry/registries', variables('containerRegistryName'))]"
+      ],
+      "identity": {
+        "type": "systemAssigned"
+      },
+      "properties": {
+        "friendlyName": "[variables('amlWorkspaceName')]",
+        "keyVault": "[resourceId('Microsoft.KeyVault/vaults',variables('keyVaultName'))]",
+        "applicationInsights": "[resourceId('Microsoft.Insights/components',variables('applicationInsightsName'))]",
+        "containerRegistry": "[resourceId('Microsoft.ContainerRegistry/registries',variables('containerRegistryName'))]",
+        "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts/',variables('storageAccountName'))]"
+      }
+    }    
+  ],
+  "outputs": {
+    "resourceGroupName": {
+      "value": "[resourceGroup().name]",
+      "type": "string"
+    },
+    "resourceGroupId": {
+      "value": "[uniqueString(resourceGroup().id)]",
+      "type": "string"
+    },
+    "resourceGroupLocation": {
+      "value": "[resourceGroup().location]",
+      "type": "string"
+    },
+    "amlWorkspaceName": {
+      "value": "[variables('amlWorkspaceName')]",
+      "type": "string"
+    },
+    "appInsightsInstrumentationKey": {
+      "value": "[reference(concat('Microsoft.Insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+      "type": "string"
+    }
+  }
+}
