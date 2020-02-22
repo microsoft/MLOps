@@ -17,13 +17,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-- group: Gonvarri-MLOps
+- group: MLOps-Library
 
 
 steps:
 - task: AzureResourceGroupDeployment@2
   inputs:
-    azureSubscription: 'Microsoft Azure Enterprise ( af715f8d-1b98-4a0b-ab63-b48c44c9b993 )'
+    azureSubscription: ''
     action: 'Create Or Update Resource Group'
     resourceGroupName: '$(RESOURCE_GROUP_NAME)'
     location: $(LOCATION)
