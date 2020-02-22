@@ -4,7 +4,7 @@
   "parameters": {
     "baseName": {
       "type": "string",
-      "defaultValue": "gonvarri",
+      "defaultValue": "mlopsyolov3",
       "metadata": {
         "description": "The base name to use as prefix to create all the resources."
       }
