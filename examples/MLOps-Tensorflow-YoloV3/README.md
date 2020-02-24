@@ -124,7 +124,7 @@ During the continuous integration an artifact is created that will leater be rel
 
 #### Final report of AML Pipeline
 
-![ground-truth](./images/Ground-Truth Info.png)
+![ground-truth](./images/Ground-Truth-Info.png)
 ![helmet](./images/helmet.png)mAP.png
 ![none](./images/none.png)
 ![mAP](./images/mAP.png)

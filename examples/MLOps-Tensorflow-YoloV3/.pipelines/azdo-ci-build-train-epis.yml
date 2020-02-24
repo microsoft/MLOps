@@ -24,16 +24,6 @@ stages:
       vmImage: 'ubuntu-latest'
     timeoutInMinutes: 0
     steps:
-      - task: SonarCloudPrepare@1
-        inputs:
-          SonarCloud: $(SONAR_CLOUD_PROJECT_NAME)
-          organization: "plainconcepts"
-          scannerMode: "CLI"
-          configMode: "manual"
-          cliProjectKey: $(SONAR_CLOUD_PROJECT_KEY)
-          cliProjectName: $(SONAR_CLOUD_PROJECT_NAME)
-          cliProjectVersion: "1.$(Build.BuildId)"
-          cliSources: "code/"
       - task: UsePythonVersion@0
         inputs:
           versionSpec: "3.6"
@@ -43,12 +33,6 @@ stages:
         displayName: Compile all
         inputs:
           script: 'python -m compileall code\'
-      - task: SonarCloudAnalyze@1
-        displayName: "Run SonarCloud analysis"
-      - task: SonarCloudPublish@1
-        displayName: "Publish SonarCloud results"
-        inputs:
-          pollingTimeoutSec: "300"
       - task: Docker@2
         inputs:
           containerRegistry: 'acr'
