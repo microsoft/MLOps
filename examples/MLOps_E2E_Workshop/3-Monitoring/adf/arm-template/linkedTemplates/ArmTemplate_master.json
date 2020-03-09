@@ -1,0 +1,126 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "devops-ds-oh-adf"
+        },
+        "AzureDatabricks_accessToken": {
+            "type": "secureString",
+            "metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
+        },
+        "AzureMLService_servicePrincipalKey": {
+            "type": "secureString",
+            "metadata": "Secure string for 'servicePrincipalKey' of 'AzureMLService'"
+        },
+        "data-ingestion-pipeline_properties_variables_data_file_name_defaultValue": {
+            "type": "string",
+            "defaultValue": "porto_seguro_safe_driver_prediction_train.csv"
+        },
+        "data-ingestion-pipeline_properties_variables_input_mount_point_name_defaultValue": {
+            "type": "string",
+            "defaultValue": "/mnt/inputdata"
+        },
+        "data-ingestion-pipeline_properties_variables_training_mount_point_name_defaultValue": {
+            "type": "string",
+            "defaultValue": "/mnt/trainingdata"
+        },
+        "data-ingestion-pipeline_properties_variables_testing_mount_point_name_defaultValue": {
+            "type": "string",
+            "defaultValue": "/mnt/testingdata"
+        },
+        "data-ingestion-pipeline_properties_variables_ml_pipeline_id_defaultValue": {
+            "type": "string",
+            "defaultValue": "dc661e88-dbb4-48b4-8910-10dd65fc5802"
+        },
+        "AzureMLService_properties_typeProperties_subscriptionId": {
+            "type": "string",
+            "defaultValue": "0fe1cc35-0cfa-4152-97d7-5dfb45a8d4ba"
+        },
+        "AzureMLService_properties_typeProperties_resourceGroupName": {
+            "type": "string",
+            "defaultValue": "devops-ds-oh-rg"
+        },
+        "AzureMLService_properties_typeProperties_servicePrincipalId": {
+            "type": "string",
+            "defaultValue": "6e85e789-3b22-4edb-89d0-2ab7fc09d488"
+        },
+        "AzureMLService_properties_typeProperties_tenant": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+        },
+        "OnDataDrop_properties_typeProperties_scope": {
+            "type": "string",
+            "defaultValue": "/subscriptions/0fe1cc35-0cfa-4152-97d7-5dfb45a8d4ba/resourceGroups/devops-ds-oh-rg/providers/Microsoft.Storage/storageAccounts/devopsdsohsa"
+        },
+        "containerUri": {
+            "type": "string",
+            "metadata": "URI to storage account containing linked ARM templates"
+        },
+        "containerSasToken": {
+            "type": "string",
+            "metadata": "Sas token to storage account containing linked ARM templates"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "ArmTemplate_0",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "AzureDatabricks_accessToken": {
+                        "value": "[parameters('AzureDatabricks_accessToken')]"
+                    },
+                    "AzureMLService_servicePrincipalKey": {
+                        "value": "[parameters('AzureMLService_servicePrincipalKey')]"
+                    },
+                    "AzureMLService_properties_typeProperties_subscriptionId": {
+                        "value": "[parameters('AzureMLService_properties_typeProperties_subscriptionId')]"
+                    },
+                    "AzureMLService_properties_typeProperties_resourceGroupName": {
+                        "value": "[parameters('AzureMLService_properties_typeProperties_resourceGroupName')]"
+                    },
+                    "AzureMLService_properties_typeProperties_servicePrincipalId": {
+                        "value": "[parameters('AzureMLService_properties_typeProperties_servicePrincipalId')]"
+                    },
+                    "AzureMLService_properties_typeProperties_tenant": {
+                        "value": "[parameters('AzureMLService_properties_typeProperties_tenant')]"
+                    },
+                    "data-ingestion-pipeline_properties_variables_data_file_name_defaultValue": {
+                        "value": "[parameters('data-ingestion-pipeline_properties_variables_data_file_name_defaultValue')]"
+                    },
+                    "data-ingestion-pipeline_properties_variables_input_mount_point_name_defaultValue": {
+                        "value": "[parameters('data-ingestion-pipeline_properties_variables_input_mount_point_name_defaultValue')]"
+                    },
+                    "data-ingestion-pipeline_properties_variables_training_mount_point_name_defaultValue": {
+                        "value": "[parameters('data-ingestion-pipeline_properties_variables_training_mount_point_name_defaultValue')]"
+                    },
+                    "data-ingestion-pipeline_properties_variables_testing_mount_point_name_defaultValue": {
+                        "value": "[parameters('data-ingestion-pipeline_properties_variables_testing_mount_point_name_defaultValue')]"
+                    },
+                    "data-ingestion-pipeline_properties_variables_ml_pipeline_id_defaultValue": {
+                        "value": "[parameters('data-ingestion-pipeline_properties_variables_ml_pipeline_id_defaultValue')]"
+                    },
+                    "OnDataDrop_properties_typeProperties_scope": {
+                        "value": "[parameters('OnDataDrop_properties_typeProperties_scope')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}
