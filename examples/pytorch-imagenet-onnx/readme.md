@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 9b3a57863d0a157db5ed86aac174127e0edc5ff8
 # Train and Deploy with Azure Machine Learning and Azure DevOps
 
 In this simple example you will learn how to: 
@@ -94,5 +97,3 @@ environments.
 In order to trigger the deployment, run through the training process again or you can create a manual release as shown below. 
 
 ![create a release](./images/create-release.PNG)
->>>>>>> 9b3a57863d0a157db5ed86aac174127e0edc5ff8
-
