@@ -29,7 +29,6 @@ The challenges your team will face when creating a Machine Learning DevOps solut
 - The trained model is packaged and deployed using a *release pipeline*, which publishes the model as either a *real-time* service for business apps to consume directly, or as a *batch scoring pipeline* that performs asynchronous inferencing for high volumes of data.
 - Telemetry from the deployed model is captured and used to provide *observability* of key metrics, which can be used to drive further iterations of experimentation and model training.
 
-![ML Ops flow](images/ml-ops.jpg)
 
 As organizations follow this pattern, multiple roles may need to collaborate to drive the process. For example:
 
@@ -42,7 +41,7 @@ As organizations follow this pattern, multiple roles may need to collaborate to 
 
 ## MLOps in Azure
 
-Microsoft Azure offers a platform with support for DevOps, machine learning, and other related workloads such as data storage and transformation. Specific Azure technologies you will use in this OpenHack include:
+Microsoft Azure offers a platform with support for DevOps, machine learning, and other related workloads such as data storage and transformation. Specific Azure technologies you will use in this include:
 
 - **Azure Machine Learning**: A cloud-based platform for creating and operating machine learning solutions, including:
     - Data ingestion and versioning.
