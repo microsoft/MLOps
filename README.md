@@ -12,12 +12,15 @@ description: "MLOps end to end examples & solutions. A collection of examples sh
 # MLOps on Azure
 - [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
 - [Example MLOps Release Pipeline](https://dev.azure.com/customai/DevopsForAI-AML/_release?view=all&_a=releases&definitionId=16)
-- [MLOps Architecture Deep Dive-  YouTube](https://www.youtube.com/watch?v=nst3UAGpiBA)
 - [Official Python Azure MLOps repo](https://github.com/Microsoft/MLOpsPython)
+- [MLOps Architecture Deep Dive video](https://www.youtube.com/watch?v=nst3UAGpiBA)
 
 ## What is MLOps?
 MLOps empowers data scientists and app developers to help bring ML models to production. 
 MLOps enables you to track / version / audit / certify / re-use every asset in your ML lifecycle and provides orchestration services to streamline managing this lifecycle.
+
+### MLOps podcast
+Check out the recent TwiML podcast on MLOps [here](https://twimlai.com/twiml-talk-321-enterprise-readiness-mlops-and-lifecycle-management-with-jordan-edwards/) 
 
 ## How does Azure ML help with MLOps?
 Azure ML contains a number of asset management and orchestration services to help you manage the lifecycle of your model training & deployment workflows.
@@ -28,6 +31,7 @@ With Azure ML + Azure DevOps you can effectively and cohesively manage your data
 ## New MLOps features
 - [Azure DevOps Machine Learning extension](https://marketplace.visualstudio.com/items?itemName=ms-air-aiagility.vss-services-azureml) 
 - [Azure ML CLI](https://aka.ms/azmlcli)
+- [Create event driven workflows](https://docs.microsoft.com/azure/machine-learning/service/how-to-use-event-grid) using Azure Machine Learning and Azure Event Grid for scenarios such as triggering retraining pipelines
 - [Set up model training & deployment with Azure DevOps](https://docs.microsoft.com/en-us/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops)
 
 > If you are using the Machine Learning DevOps extension, you can access model name and version info using these variables:
@@ -46,7 +50,7 @@ An example repo which exercises our recommended flow can be found [here](https:/
 - For new code: Every time new code is committed to the repo, run unit tests, data quality checks, train model.
 
 We recommend the following steps in your CI process:
-- **Train Model** - run training code / algo & output a [model](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model) file which is stored in the [run history](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#run).
+- **Train Model** - run training code / algo & output a [model](https://docs.microsoft.com/en-us/azure/machine-learning/concept-azure-machine-learning-architecture#model) file which is stored in the [run history](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#run).
 - **Evaluate Model** - compare the performance of newly trained model with the model in production. If the new model performs better than the production model, the following steps are executed. If not, they will be skipped.
 - **Register Model** - take the best model and register it with the [Azure ML Model registry](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-azure-machine-learning-architecture#model-registry). This allows us to version control it.
 
@@ -72,6 +76,9 @@ All of our examples will be built in the open and we welcome contributions from 
 - https://github.com/microsoft/nlp ( Natural language processing examples using MLOps + GitHub + Azure)
 - https://github.com/microsoft/AIArchitecturesAndPractices
 - https://github.com/danielsc/azureml-debug-training/blob/master/Setting%20up%20VSCode%20Remote%20on%20an%20AzureML%20Notebook%20VM.md - code from a notebook VM in VSCode
+- https://github.com/jomit/SecureAzureMLWorkshop (code + scripts to run workshop around building secure ml platform on azure)
+- https://github.com/Azure/ml-functions-package-demo package an ML model for use in Azure Functions
+- https://github.com/CESARDELATORRE/poc-spark-aml/blob/master/spark-job.py (Spark job on aml compute)
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
 - Digital audit trail requirements change when dealing with code + (potentially customer) data
@@ -110,3 +117,9 @@ provided by the bot. You will only need to do this once across all repos using o
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+
+### Related projects
+
+
+[Microsoft AI Labs Github](https://aka.ms/ai-labs) Find other Best Practice projects, and Azure AI design patterns in our central repository. 

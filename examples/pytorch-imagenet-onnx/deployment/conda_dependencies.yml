@@ -1,0 +1,51 @@
+# Conda environment specification. The dependencies defined in this file will
+
+# be automatically provisioned for managed runs. These include runs against
+
+# the localdocker, remotedocker, and cluster compute targets.
+
+
+# Note that this file is NOT used to automatically manage dependencies for the
+
+# local compute target. To provision these dependencies locally, run:
+
+# conda env update --file conda_dependencies.yml
+
+
+# Details about the Conda environment file format:
+
+# https://conda.io/docs/using/envs.html#create-environment-file-by-hand
+
+
+# For managing Spark packages and configuration, see spark_dependencies.yml.
+
+
+# Version of this configuration file's structure and semantics in AzureML.
+
+# This directive is stored in a comment to preserve the Conda file structure.
+
+# [AzureMlVersion] = 2
+
+
+name: project_environment
+dependencies:
+  # The python interpreter version.
+- python=3.6.2
+  # Required by azureml-defaults, installed separately through Conda to
+
+- pip:
+    # Required packages for AzureML execution, history, and data preparation.
+  - azureml-sdk[notebooks]    
+  #add the version to lock it ==0.1.74
+  - numpy==1.14.5
+  - joblib==0.13.2
+  # gunicorn==19.9.0
+  # flask==1.1.1
+  - azure-ml-api-sdk
+  - azureml-defaults
+  - onnx
+  - onnxruntime
+  - torch
+#channels:
+#- conda-forge
+
