@@ -16,7 +16,7 @@ Before running this notebook, make sure you have gone through the steps listed b
 
 - You have a workspace created listed [here](https://docs.microsoft.com/en-us/azure/machine-learning/service/quickstart-get-started )  
 
-#References
+## References
 
 - https://github.com/huggingface/transformers/tree/master/examples
 - https://huggingface.co/transformers/v1.2.0/examples.html#introduction
