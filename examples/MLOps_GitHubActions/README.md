@@ -6,12 +6,12 @@ This example shows you how to use Azure Machine Learning, GitHub Actions and Eve
 
 It's reccomended that you have an understanding of Azure Machine Learning and have at least contributor access to an Azure Machine Learning workspace. Here are some features and concepts the repo will be using: 
 
-[MLOps on Azure Machine Learning](https://docs.microsoft.com/en-us/azure/machine-learning/concept-model-management-and-deployment)
-[Azure Machine Learning Pipelines](https://docs.microsoft.com/en-us/azure/machine-learning/concept-ml-pipelines)
-[Azure Event Grid integration with Azure Machine Learning](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-event-grid)
+* [MLOps on Azure Machine Learning](https://docs.microsoft.com/en-us/azure/machine-learning/concept-model-management-and-deployment)
+* [Azure Machine Learning Pipelines](https://docs.microsoft.com/en-us/azure/machine-learning/concept-ml-pipelines)
+* [Azure Event Grid integration with Azure Machine Learning](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-event-grid)
 
 
-# What's in this folder? 
+# Content
 
 ## Code
 
