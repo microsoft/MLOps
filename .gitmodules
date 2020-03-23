@@ -10,3 +10,9 @@
 [submodule "examples/azureml-compute-debugging-pycharm"]
 	path = examples/Pycharm-Debugging
 	url = https://github.com/ezwiefel/azureml-compute-debugging-pycharm
+[submodule "examples/MLOps_GitHubActions/seer"]
+	path = examples/MLOps_GitHubActions/seer
+	url = https://github.com/cloudscaleml/seer.git
+[submodule "examples/MLOps_GitHubActions/mlrouter"]
+	path = examples/MLOps_GitHubActions/mlrouter
+	url = https://github.com/cloudscaleml/mlrouter.git
