@@ -1,0 +1,3 @@
+pathlib
+matplotlib
+tensorflow-gpu

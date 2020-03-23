@@ -1,0 +1,35 @@
+name: rebuild and run ml pipeline
+
+on:
+  push:
+    branches:
+      master
+    paths:
+    - '**.py'
+    - 'requirements.txt'
+    - '!get_logs.py'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      AML_ENV: ${{ secrets.AMLENV }}
+
+    steps:
+    # checkout the repo
+    - uses: actions/checkout@master
+    
+    - name: Setup Python 3.6
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
+
+    - name: 'Install AzureML'
+      shell: bash
+      run: |
+        pip install --upgrade azureml-sdk
+
+    - name: 'Run Pipeline'
+      shell: bash
+      run: |
+        python pipeline.py -a "$AML_ENV" -b $GITHUB_SHA

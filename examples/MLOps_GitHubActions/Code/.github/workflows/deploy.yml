@@ -1,0 +1,27 @@
+name: deploy model
+
+on:
+  repository_dispatch:
+    types:
+    - model-registered
+
+jobs:
+  deploy-model:
+    runs-on: ubuntu-latest
+    steps:
+    # checkout SHA corresponding to model
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.client_payload.github_ref }}
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AMLENV }}
+
+    - name: add ml extension
+      run: |
+        az extension add -n azure-cli-ml
+
+    - name: deploy model
+      run: |
+        az ml model deploy --name ${{ github.event.client_payload.service }} --model ${{ github.event.client_payload.model }}:${{ github.event.client_payload.version }} --compute-target ${{ github.event.client_payload.compute_target }} --inference-config inferenceconfig.json --deploy-config-file deployconfig.json --resource-group ${{ github.event.client_payload.resource_group }} --workspace-name ${{ github.event.client_payload.workspace }} --overwrite

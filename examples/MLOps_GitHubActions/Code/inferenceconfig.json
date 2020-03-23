@@ -1,0 +1,10 @@
+{
+    "entryScript": "score.py",
+    "runtime": "python",
+    "condaFile": "seer_scoring.yml",
+    "extraDockerfileSteps": null,
+    "sourceDirectory": null,
+    "enableGpu": true,
+    "baseImage": null,
+    "baseImageRegistry": null
+}
