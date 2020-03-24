@@ -13,3 +13,4 @@
 [submodule "examples/MLOps-YoloV3"]
 	path = examples/MLOps-YoloV3
 	url = https://github.com/alexandergg/MLOps-YoloV3
+
