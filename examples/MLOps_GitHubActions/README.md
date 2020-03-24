@@ -13,6 +13,8 @@ It's reccomended that you have a basic understanding of Azure Machine Learning, 
 
 # Content
 
+You can start with either folder. In order to run this project end to end complete the set up from both folders. 
+
 ## Code
 
 This folder contains example code to build an image classifaction model to distinguish betweens tacos and burritos. You can replace any of the training code with your own. Additionally this folder also porvides a build and deploy yaml in the subfolder **workflows** that you will trigger as actions. 
