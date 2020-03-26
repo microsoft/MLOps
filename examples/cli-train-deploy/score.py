@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from sklearn.externals import joblib
+import joblib
 from sklearn.linear_model import Ridge
 from azureml.core.model import Model
 

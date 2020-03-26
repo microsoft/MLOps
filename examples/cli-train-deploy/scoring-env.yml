@@ -4,5 +4,6 @@ dependencies:
   - pip:
     - azureml-defaults
     - scikit-learn
+    - joblib
     - numpy
     - inference-schema[numpy-support]
