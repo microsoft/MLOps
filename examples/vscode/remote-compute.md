@@ -8,13 +8,13 @@ Note: PuTTY is not supported on Windows since the ssh command must be in the pat
 
 1. Download the [script](https://github.com/danielsc/azureml-debug-training/blob/master/src/create_ssh_config.py) and run the script on your local machine with `python create_ssh_config.py`
 2. For your **IP Address**: 
-    -  Find VM in https://ml.azure.com/, Click **Compute** and Click the VM you want the SSH into. You should we a page with the title "Compute Details" with all your VM details.
+    -  Find VM in https://ml.azure.com/, Click **Compute** and Click the VM you want the SSH into. You should see a page with the title "Compute Details" with all your VM details.
     -  Click the link under "Resource ID" for that VM 
     ![](img/vm_ipaddress.png)
-    -  Copy the "Public IP address", that is your IP Address value
+    -  Copy the "Public IP address" (your IP Address value)
     -  Paste value in the terminal
 3. For your **Private Key**: 
-    -  Find VM in https://ml.azure.com/, Click **Compute** and Click the VM you want the SSH into. You should we a page with the title "Compute Details" with all your VM details.
+    -  Find VM in https://ml.azure.com/, Click **Compute** and Click the VM you want the SSH into. You should see a page with the title "Compute Details" with all your VM details.
     ![](img/vm_ssh_config_ws2.png)
     -  Copy the RSA Key "Private key" for that VM 
     -  Paste value in the terminal
