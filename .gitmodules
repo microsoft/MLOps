@@ -10,3 +10,7 @@
 [submodule "examples/azureml-compute-debugging-pycharm"]
 	path = examples/Pycharm-Debugging
 	url = https://github.com/ezwiefel/azureml-compute-debugging-pycharm
+[submodule "examples/MLOps-YoloV3"]
+	path = examples/MLOps-YoloV3
+	url = https://github.com/alexandergg/MLOps-YoloV3
+
