@@ -1,0 +1,8 @@
+keras==2.2.4
+gitpython
+scikit-image
+opencv-python
+imageaug
+matplotlib
+h5py
+Pillow
