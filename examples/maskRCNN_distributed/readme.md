@@ -15,6 +15,9 @@ Before running this notebook, make sure you have gone through the steps listed b
 
 - Distributed training in Azure Machine Learning:  https://github.com/Azure/MachineLearningNotebooks/tree/master/how-to-use-azureml/training-with-deep-learning
 
+- Matterport's Mask R-CNN distributed training implementation
+https://github.com/datashinobi/Mask_RCNN/tree/yassine/horovod
+
 - Matterport Mask R-CNN 
 ```
 @misc{matterport_maskrcnn_2017,
@@ -26,5 +29,3 @@ Before running this notebook, make sure you have gone through the steps listed b
   howpublished={\url{https://github.com/matterport/Mask_RCNN}},
 }
 ```
-Matterport Mask R-CNN distributed training implementation
-https://github.com/datashinobi/Mask_RCNN/tree/yassine/horovod
