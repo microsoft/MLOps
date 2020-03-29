@@ -1,0 +1,105 @@
+# Azure Pipeline Template for ML Workspace Resources Deployment
+parameters:
+- name: environment
+  type: string
+- name: serviceConnection
+  type: string
+
+jobs:
+- deployment: DeployMLResources
+  displayName: Deploy ML Resources
+  pool:
+    vmImage: ubuntu-16.04
+  environment: ${{ parameters.environment }}
+  variables:
+  - name: resourceGroupName
+    value: mlopsexample-${{ parameters.environment }}
+  - name: resourceGroupLocation
+    value: westeurope
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - download: current
+          artifact: infratemplates
+        - script: ls
+          displayName: 'List dirs'
+
+        - task: AzureResourceGroupDeployment@2
+          displayName: 'Deploy Storage Account for AML'
+          inputs:
+            azureSubscription: ${{ parameters.serviceConnection }}
+            resourceGroupName: $(resourceGroupName)
+            location: $(resourceGroupLocation)
+            csmFile: '$(Pipeline.Workspace)/infratemplates/storage/template.json'
+            csmParametersFile: '$(Pipeline.Workspace)/infratemplates/storage/parameters.${{ parameters.environment }}.json'
+
+        # Optional - Add a second storage account to host data for machine learning
+        # - task: AzureResourceGroupDeployment@2
+        #   displayName: 'Deploy Storage Account for Data'
+        #   inputs:
+        #     azureSubscription: ${{ parameters.serviceConnection }}
+        #     resourceGroupName: $(resourceGroupName)
+        #     location: $(resourceGroupLocation)
+        #     csmFile: '$(Pipeline.Workspace)/infratemplates/storage/template.json'
+        #     csmParametersFile: '$(Pipeline.Workspace)/infratemplates/storage/parameters.${{ parameters.environment }}.json'
+        #     overrideParameters: |
+        #       -name "mlopssadata${{ parameters.environment }}"
+
+        - task: AzureResourceGroupDeployment@2
+          displayName: 'Deploy Container Registry'
+          inputs:
+            azureSubscription: ${{ parameters.serviceConnection }}
+            resourceGroupName: $(resourceGroupName)
+            location: $(resourceGroupLocation)
+            csmFile: '$(Pipeline.Workspace)/infratemplates/containerregistry/template.json'
+            csmParametersFile: '$(Pipeline.Workspace)/infratemplates/containerregistry/parameters.${{ parameters.environment }}.json'
+
+        - task: AzureResourceGroupDeployment@2
+          displayName: 'Deploy Application Insights'
+          inputs:
+            azureSubscription: ${{ parameters.serviceConnection }}
+            resourceGroupName: $(resourceGroupName)
+            location: $(resourceGroupLocation)
+            csmFile: '$(Pipeline.Workspace)/infratemplates/appinsights/template.json'
+            csmParametersFile: '$(Pipeline.Workspace)/infratemplates/appinsights/parameters.${{ parameters.environment }}.json'
+
+        - task: AzureResourceGroupDeployment@2
+          displayName: 'Deploy Key Vault'
+          inputs:
+            azureSubscription: ${{ parameters.serviceConnection }}
+            resourceGroupName: $(resourceGroupName)
+            location: $(resourceGroupLocation)
+            csmFile: '$(Pipeline.Workspace)/infratemplates/keyvault/template.json'
+            csmParametersFile: '$(Pipeline.Workspace)/infratemplates/keyvault/parameters.${{ parameters.environment }}.json'
+
+        - task: AzureResourceGroupDeployment@2
+          displayName: 'Deploy ML Workspace'
+          inputs:
+            azureSubscription: ${{ parameters.serviceConnection }}
+            resourceGroupName: $(resourceGroupName)
+            location: $(resourceGroupLocation)
+            csmFile: '$(Pipeline.Workspace)/infratemplates/mlworkspace/template.json'
+            csmParametersFile: '$(Pipeline.Workspace)/infratemplates/mlworkspace/parameters.${{ parameters.environment }}.json'
+
+        # Optional - Add a second ML workspace using the same underlying infrastructure
+        # - task: AzureResourceGroupDeployment@2
+        #   displayName: 'Deploy ML Workspace'
+        #   inputs:
+        #     azureSubscription: ${{ parameters.serviceConnection }}
+        #     resourceGroupName: $(resourceGroupName)
+        #     location: $(resourceGroupLocation)
+        #     csmFile: '$(Pipeline.Workspace)/infratemplates/mlworkspace/template.json'
+        #     csmParametersFile: '$(Pipeline.Workspace)/infratemplates/mlworkspace/parameters.${{ parameters.environment }}.json'
+        #     csmParametersFile: '$(Pipeline.Workspace)/infratemplates/storage/parameters.${{ parameters.environment }}.json'
+        #     overrideParameters: |
+        #       -name "mlops-mls2-${{ parameters.environment }}"
+
+        - task: AzureResourceGroupDeployment@2
+          displayName: 'Deploy ML Compute'
+          inputs:
+            azureSubscription: ${{ parameters.serviceConnection }}
+            resourceGroupName: $(resourceGroupName)
+            location: $(resourceGroupLocation)
+            csmFile: '$(Pipeline.Workspace)/infratemplates/mlcompute/template.json'
+            csmParametersFile: '$(Pipeline.Workspace)/infratemplates/mlcompute/parameters.${{ parameters.environment }}.json'

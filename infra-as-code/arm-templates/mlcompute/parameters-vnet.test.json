@@ -3,31 +3,31 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "workspaceName": {
-            "value": "myworkspace"
+            "value": "mlops-mls-test"
         },
         "clusterName": {
-            "value": "mycluster"
+            "value": "cpu-compute"
+        },
+        "vmSize": {
+            "value": "STANDARD_D3_V2"
         },
         "minNodeCount": {
             "value": 0
         },
         "maxNodeCount": {
-            "value": 1
+            "value": 3
+        },
+        "scaleDownTime": {
+            "value": "PT15M"
+        },
+        "subnetId": {
+            "value": "/subscriptions/xxxx/resourceGroups/yyyy/providers/Microsoft.Network/virtualNetworks/zzzz/subnets/ssss"
         },
         "adminUserName": {
             "value": "<Fill-here>"
         },
         "adminUserPassword": {
             "value": "<Fill-here>"
-        },
-        "workspacelocation": {
-            "value": "<Fill-here>"
-        },
-        "vmSize": {
-            "value": "workspacelocation"
-        },
-        "subnetId": {
-            "value": "/subscriptions/xxxx/resourceGroups/yyyy/providers/Microsoft.Network/virtualNetworks/zzzz/subnets/ssss"
         }
     }
 }

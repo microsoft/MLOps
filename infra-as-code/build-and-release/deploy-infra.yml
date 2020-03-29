@@ -1,0 +1,46 @@
+# Azure Pipeline Definition for Infrastructure Deployment
+
+# Trigger on changes in the infrastructure folder and on the master branch                      
+trigger:
+  branches:
+    include:
+    - master
+
+  paths:
+    include:
+    - infra-as-code/*
+
+stages:
+- stage: Build
+  displayName: 'IaC Build'
+  jobs:
+  - job: Build
+    pool:
+      vmImage: ubuntu-16.04
+    steps:
+    - task: CopyFiles@2
+      displayName: 'Copy ARM templates'
+      inputs:
+        sourceFolder: 'infra-as-code/arm-templates'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      artifact: infratemplates
+
+- stage: DEV
+  displayName: 'DEV Deployment'
+  jobs:
+  - template: deploy-infra.template.yml
+    parameters:
+      environment: dev
+      serviceConnection: <your-service-connection-name>
+
+- stage: TEST
+  # only make deployments to TEST originating from the master branch
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  displayName: 'TEST Deployment'
+  jobs:
+  - template: deploy-infra.template.yml
+    parameters:
+      environment: test
+      serviceConnection: <your-service-connection-name>
+
