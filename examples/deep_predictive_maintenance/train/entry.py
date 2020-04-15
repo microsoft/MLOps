@@ -74,4 +74,6 @@ if __name__ == '__main__':
     model_path = os.path.join(output_dir, 'network.pth')
     
     torch.save(network, model_path)
+    # child runs have to upload model to Experiment before register will work
+    run.upload_file(model_path, model_path)    
     run.register_model(model_name = 'network.pth', model_path = model_path)
