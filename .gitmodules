@@ -14,3 +14,6 @@
 	path = examples/MLOps-YoloV3
 	url = https://github.com/alexandergg/MLOps-YoloV3
 
+[submodule "examples/MachineLearning-BaseballPrediction-BlazorApp"]
+	path = examples/MachineLearning-BaseballPrediction-BlazorApp
+	url = https://github.com/bartczernicki/MachineLearning-BaseballPrediction-BlazorApp
