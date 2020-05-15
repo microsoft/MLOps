@@ -1,0 +1,16 @@
+
+name: project_environment
+dependencies:
+- python=3.6.9
+
+- pip:
+  - fastai==1.0.60
+  - torch
+  - torchvision  
+  - azureml-defaults
+  - azureml-core
+  - matplotlib==3.1.2
+- numpy==1.16.2
+- Pillow==6.2.0
+- pandas==0.23.4
+
