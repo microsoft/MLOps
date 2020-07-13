@@ -206,4 +206,4 @@ print resp.text
 ```
 
 ## Reference
-[RestAPI Official Guide](https://review.docs.microsoft.com/en-us/rest/api/machinelearningservices/workspacesandcompute/machinelearningcompute)
+[RestAPI Official Guide](https://docs.microsoft.com/en-us/rest/api/azureml/workspacesandcomputes/machinelearningcompute)

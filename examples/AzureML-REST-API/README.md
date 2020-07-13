@@ -11,6 +11,7 @@ description: "Examples of using the Azure Machine Learning REST API."
 
 # Azure Machine Learning REST API
 
-Learn how to use the REST API to accomplish the following tasks with Azure Machine Learning:
+Learn how to use Azure Machine Learning REST APIs to manage :
 
-* [Submit a training run](https://github.com/microsoft/MLOps/blob/master/examples/AzureML-REST-API/rest-submit-run.md)
+* [AML Compute](https://github.com/microsoft/MLOps/blob/master/examples/AzureML-REST-API/compute.md)
+* [AML Workspace](https://github.com/microsoft/MLOps/blob/master/examples/AzureML-REST-API/workspace.md)
