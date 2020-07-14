@@ -154,3 +154,6 @@ print(resp.text)
 resp = requests.get(list_workerspace_url, headers=header)
 print(resp.text)
 ```
+
+## Reference
+[RestAPI Official Guide](https://docs.microsoft.com/en-us/rest/api/azureml/workspacesandcomputes/workspaces)
