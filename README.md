@@ -80,6 +80,7 @@ All of our examples will be built in the open and we welcome contributions from 
 - https://github.com/Azure/ml-functions-package-demo package an ML model for use in Azure Functions
 - https://github.com/microsoft/seismic-deeplearning (deep learning for seismic imaging and interpretation)
 - https://github.com/CESARDELATORRE/poc-spark-aml/blob/master/spark-job.py (Spark job on aml compute)
+- https://github.com/microsoft/knowledge-extraction-recipes-forms/blob/master/Pipelines/Azure_Machine_Learning/README.md (Knowledge Extraction from Forms with MLOps)
 
 ## How is MLOps different from DevOps?
 - Data/model versioning != code versioning - how to version data sets as the schema and origin data change
