@@ -105,3 +105,6 @@ venv.bak/
 
 config.json
 **/.amlignore
+
+.idea
+.DS_Store
