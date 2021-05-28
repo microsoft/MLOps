@@ -13,6 +13,9 @@
 [submodule "examples/MLOps-YoloV3"]
 	path = examples/MLOps-YoloV3
 	url = https://github.com/alexandergg/MLOps-YoloV3
+[submodule "examples/MLOpsManufacturing"]
+	path = examples/MLOpsManufacturing
+	url = https://github.com/liupeirong/MLOpsManufacturing
 
 [submodule "examples/MachineLearning-BaseballPrediction-BlazorApp"]
 	path = examples/MachineLearning-BaseballPrediction-BlazorApp
