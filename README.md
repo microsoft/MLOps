@@ -9,6 +9,20 @@ products:
 description: "MLOps end to end examples & solutions. A collection of examples showing different end to end scenarios operationalizing ML workflows with Azure Machine Learning, integrated with GitHub and other Azure services such as Data Factory and DevOps."
 ---
 
+# Updated MLOps Guidance on Azure (2023)
+To learn the more about the latest guidance from Microsoft about MLOps review the following links.
+
+- [Azure MLOps (v2) Solution Accelerator](https://github.com/Azure/mlops-v2)
+- [Set up MLOps with Azure DevOps](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-setup-mlops-azureml?view=azureml-api-2&tabs=azure-shell)
+- [Set up MLOps with Github](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-setup-mlops-github-azure-ml?view=azureml-api-2&tabs=azure-shell)
+- [Offical Microsoft Documentatation on MLOps](https://learn.microsoft.com/en-us/azure/machine-learning/concept-model-management-and-deployment?view=azureml-api-2)
+- [Microsoft Learn cournse for intro to MLOps](https://learn.microsoft.com/en-us/training/paths/introduction-machine-learn-operations/)
+- [Microsoft Learn course for E2E MLOps](https://learn.microsoft.com/en-us/training/paths/build-first-machine-operations-workflow/)
+
+
+
+------------------------------
+
 # MLOps on Azure
 - [![Build Status](https://dev.azure.com/aidemos/MLOps/_apis/build/status/microsoft.MLOps?branchName=master)](https://dev.azure.com/aidemos/MLOps/_build/latest?definitionId=96?branchName=master)
 - [Example MLOps Release Pipeline](https://dev.azure.com/customai/DevopsForAI-AML/_release?view=all&_a=releases&definitionId=16)
