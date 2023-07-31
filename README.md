@@ -16,7 +16,7 @@ To learn the more about the latest guidance from Microsoft about MLOps review th
 - [Set up MLOps with Azure DevOps](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-setup-mlops-azureml?view=azureml-api-2&tabs=azure-shell)
 - [Set up MLOps with Github](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-setup-mlops-github-azure-ml?view=azureml-api-2&tabs=azure-shell)
 - [Offical Microsoft Documentatation on MLOps](https://learn.microsoft.com/en-us/azure/machine-learning/concept-model-management-and-deployment?view=azureml-api-2)
-- [Microsoft Learn cournse for intro to MLOps](https://learn.microsoft.com/en-us/training/paths/introduction-machine-learn-operations/)
+- [Microsoft Learn course for intro to MLOps](https://learn.microsoft.com/en-us/training/paths/introduction-machine-learn-operations/)
 - [Microsoft Learn course for E2E MLOps](https://learn.microsoft.com/en-us/training/paths/build-first-machine-operations-workflow/)
 
 
